@@ -71,7 +71,7 @@ see the file named COPYING.
 
 The latest version is available from:
 
-	http://www.freedesktop.org/wiki/Software/shared-mime-info/
+        http://www.freedesktop.org/wiki/Software/shared-mime-info/
 
 To extend this database, users and applications should create additional
 XML files in the 'packages' directory and run the update-mime-database
@@ -381,6 +381,14 @@ command to generate the output files.
       <match type="string" value="DataPlkr" offset="60"/>
     </magic>
   </mime-type>
+  <mime-type type="application/buildstream+yaml">
+    <comment>BuildStream element</comment>
+    <sub-class-of type="application/yaml"/>
+    <glob pattern="*.bst"/>
+    <magic>
+      <match type="string" value="kind:" offset="0:256"/>
+    </magic>
+  </mime-type>
   <mime-type type="application/raml+yaml">
     <comment>RAML document</comment>
     <acronym>RAML</acronym>
@@ -435,6 +443,13 @@ command to generate the output files.
     <root-XML namespaceURI="http://www.w3.org/2001/SMIL20/Language" localName="smil"/>
     <root-XML namespaceURI="http://www.w3.org/2005/SMIL21/Language" localName="smil"/>
     <root-XML namespaceURI="http://www.w3.org/ns/SMIL" localName="smil"/>
+  </mime-type>
+  <mime-type type="application/spdx+json">
+    <comment>SPDX SBOM document</comment>
+    <acronym>SPDX SBOM</acronym>
+    <expanded-acronym>Software Package Data Exchange Software Bill Of Materials</expanded-acronym>
+    <sub-class-of type="application/json"/>
+    <glob pattern="*.spdx.json"/>
   </mime-type>
   <mime-type type="application/vnd.ms-wpl">
     <comment>WPL playlist</comment>
@@ -638,6 +653,27 @@ command to generate the output files.
       <match type="string" value="*PPD-Adobe:" offset="0"/>
     </magic>
     <glob pattern="*.ppd"/>
+  </mime-type>
+  <mime-type type="application/vnd.cyclonedx+json">
+    <comment>CycloneDX BOM document</comment>
+    <acronym>BOM</acronym>
+    <expanded-acronym>Bill Of Materials</expanded-acronym>
+    <sub-class-of type="application/json"/>
+    <glob pattern="*.cdx.json"/>
+  </mime-type>
+  <mime-type type="application/vnd.cyclonedx+xml">
+    <comment>CycloneDX BOM document</comment>
+    <acronym>BOM</acronym>
+    <expanded-acronym>Bill Of Materials</expanded-acronym>
+    <sub-class-of type="application/xml"/>
+    <glob pattern="*.cdx.xml"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.0" localName="bom"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.1" localName="bom"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.2" localName="bom"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.3" localName="bom"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.4" localName="bom"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.5" localName="bom"/>
+    <root-XML namespaceURI="http://cyclonedx.org/schema/bom/1.6" localName="bom"/>
   </mime-type>
   <mime-type type="application/vnd.lotus-1-2-3">
     <comment>Lotus 1-2-3 spreadsheet</comment>
@@ -902,16 +938,14 @@ command to generate the output files.
       <match type="string" value="\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1" offset="0">
         <match type="string" value="\x00\x09\x02\x00\x00\x00\x00\x00\x00\xc0\x46\x00\x00\x00\x00\x00" offset="592:8192"/>
         <match type="string" value="\x06\x09\x02\x00\x00\x00\x00\x00\x00\xc0\x46\x00\x00\x00\x00\x00" offset="592:8192"/>
+        <match type="string" value="\xa\x0\x0\x0MSWordDoc\x0" offset="2080:2140"/>
+        <match type="string" value="\xec\xa5\x00\x00" mask="0xffff00fe" offset="512"/>
+        <match type="string" value="Microsoft Word document data" offset="2112"/>
       </match>
       <match type="string" value="\x31\xbe\x00\x00" offset="0"/>
       <match type="string" value="PO^Q`" offset="0"/>
       <match type="string" value="\376\067\0\043" offset="0"/>
       <match type="string" value="\333\245-\0\0\0" offset="0"/>
-      <match type="string" value="MSWordDoc" offset="2112"/>
-      <match type="string" value="MSWordDoc" offset="2108"/>
-      <match type="string" value="Microsoft Word document data" offset="2112"/>
-      <match type="string" value="bjbj" offset="546"/>
-      <match type="string" value="jbjb" offset="546"/>
     </magic>
     <glob pattern="*.doc"/>
     <alias type="application/vnd.ms-word"/>
@@ -1580,6 +1614,12 @@ command to generate the output files.
     <sub-class-of type="application/java-archive"/>
     <glob pattern="*.apk"/>
   </mime-type>
+  <mime-type type="application/x-alpine-package-keeper-package">
+    <comment>Alpine Package Keeper package</comment>
+    <generic-icon name="package-x-generic"/>
+    <sub-class-of type="application/x-compressed-tar"/>
+    <glob pattern="*.apk" weight="40"/>
+  </mime-type>
   <mime-type type="application/vnd.symbian.install">
     <comment>SIS package</comment>
     <acronym>SIS</acronym>
@@ -1618,11 +1658,12 @@ command to generate the output files.
     <expanded-acronym>PCAP Next Generation</expanded-acronym>
     <magic>
       <match type="host32" value="0x0a0d0d0a" offset="0">
-	<match type="host32" value="0x1a2b3c4d" offset="8"/>
-	<match type="host32" value="0x4d3c2b1a" offset="8"/>
+        <match type="host32" value="0x1a2b3c4d" offset="8"/>
+        <match type="host32" value="0x4d3c2b1a" offset="8"/>
       </match>
     </magic>
     <glob pattern="*.pcapng"/>
+    <glob pattern="*.scap"/>
     <glob pattern="*.ntar"/>
   </mime-type>
   <mime-type type="application/vnd.wordperfect">
@@ -2745,6 +2786,7 @@ command to generate the output files.
     <generic-icon name="application-x-executable"/>
     <magic>
       <match type="string" value="SEGA GENESIS" offset="256"/>
+      <match type="string" value="SEGA MEGADRIVE" offset="256"/>
       <match type="string" value="SEGA MEGA DRIVE" offset="256"/>
       <match type="string" value="SEGA_MEGA_DRIVE" offset="256"/>
       <match type="string" value="SEGA SSF" offset="256"/>
@@ -2910,6 +2952,13 @@ command to generate the output files.
     <comment>Groovy source code</comment>
     <sub-class-of type="text/plain"/>
     <generic-icon name="text-x-script"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="package" offset="0"/>
+    </magic>
     <glob pattern="*.groovy"/>
     <glob pattern="*.gvy"/>
     <glob pattern="*.gy"/>
@@ -2962,8 +3011,7 @@ command to generate the output files.
     <alias type="application/x-javascript"/>
     <alias type="application/javascript"/>
     <alias type="text/jscript"/>
-    <sub-class-of type="application/x-executable"/>
-    <sub-class-of type="text/plain"/>
+    <sub-class-of type="application/typescript"/>
     <generic-icon name="text-x-script"/>
     <magic>
       <match type="string" value="#!/bin/gjs" offset="0"/>
@@ -2977,6 +3025,7 @@ command to generate the output files.
       <match type="string" value='eval \"exec /usr/local/bin/gjs' offset="0"/>
       <match type="string" value='/bin/env gjs' offset="2:16"/>
     </magic>
+    <glob pattern="*.cjs"/>
     <glob pattern="*.js"/>
     <glob pattern="*.jsm"/>
     <glob pattern="*.mjs"/>
@@ -2989,6 +3038,21 @@ command to generate the output files.
       <match type="string" value="#@~^" offset="0"/>
     </magic>
     <glob pattern="*.jse"/>
+  </mime-type>
+  <mime-type type="application/typescript">
+    <comment>TypeScript program</comment>
+    <sub-class-of type="application/x-executable"/>
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
+    <magic priority="10">
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="function" offset="0"/>
+    </magic>
+    <glob pattern="*.cts"/>
+    <glob pattern="*.mts" weight="40"/>
+    <glob pattern="*.ts" weight="40"/>
   </mime-type>
   <mime-type type="application/json">
     <comment>JSON document</comment>
@@ -3005,6 +3069,17 @@ command to generate the output files.
     <sub-class-of type="application/ecmascript"/>
     <generic-icon name="text-x-script"/>
     <glob pattern="*.json5"/>
+  </mime-type>
+  <mime-type type="application/har+json">
+    <comment>HTTP archive</comment>
+    <sub-class-of type="application/json"/>
+    <generic-icon name="package-x-generic"/>
+    <magic priority="10">
+      <match type="string" value="{" offset="0">
+        <match type="string" value='"log":' offset="1:256"/>
+      </match>
+    </magic>
+    <glob pattern="*.har"/>
   </mime-type>
   <mime-type type="application/jrd+json">
     <comment>JRD document</comment>
@@ -4242,7 +4317,13 @@ command to generate the output files.
       <match type="string" value="/bin/env ruby" offset="2:16"/>
       <match type="string" value="/bin/ruby" offset="2:16"/>
     </magic>
+    <magic priority="10">
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="def" offset="0"/>
+      <match type="string" value="module" offset="0"/>
+    </magic>
     <glob pattern="*.rb"/>
+    <alias type="text/x-ruby"/>
   </mime-type>
   <mime-type type="application/x-markaby">
     <comment>Markaby script</comment>
@@ -4255,15 +4336,37 @@ command to generate the output files.
     <sub-class-of type="text/plain"/>
     <glob pattern="*.cr"/>
     <alias type="text/crystal"/>
+    <magic priority="10">
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="def" offset="0"/>
+      <match type="string" value="module" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+    </magic>
   </mime-type>
   <mime-type type="text/julia">
     <comment>Julia source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="function" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="include" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+      <match type="string" value="using" offset="0"/>
+    </magic>
     <glob pattern="*.jl"/>
   </mime-type>
   <mime-type type="text/rust">
     <comment>Rust source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="fn" offset="0"/>
+      <match type="string" value="impl" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+      <match type="string" value="trait" offset="0"/>
+      <match type="string" value="use" offset="0"/>
+    </magic>
     <glob pattern="*.rs"/>
   </mime-type>
   <mime-type type="application/x-sc">
@@ -4327,10 +4430,10 @@ command to generate the output files.
     <glob pattern="*.fish"/>
   </mime-type>
   <mime-type type="application/x-nuscript">
-    <comment>Nu shell script</comment>
+    <comment>Nushell script</comment>
     <sub-class-of type="application/x-executable"/>
     <sub-class-of type="text/plain"/>
-    <alias type="text/x-nu"/>
+    <alias type="text/x-nushell"/>
     <generic-icon name="text-x-script"/>
     <magic>
       <match type="string" value="/bin/env nu" offset="2:16"/>
@@ -4509,6 +4612,42 @@ command to generate the output files.
     </magic>
     <glob pattern="*.ssa"/>
     <glob pattern="*.ass"/>
+  </mime-type>
+  <mime-type type="text/x-ssh-public-key">
+    <comment>OpenSSH public key</comment>
+    <sub-class-of type="text/plain"/>
+    <magic>
+      <match type="string" offset="0" value="ssh-ed25519 "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="sk-ssh-ed25519@openssh.com "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="ecdsa-sha2-nistp521 "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="ecdsa-sha2-nistp384 "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="ecdsa-sha2-nistp256 "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="sk-ecdsa-sha2-nistp256@openssh.com "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="ssh-rsa "/>
+    </magic>
+    <magic>
+      <match type="string" offset="0" value="ssh-dss "/>
+    </magic>
+    <glob pattern="*.pub"/>
+  </mime-type>
+  <mime-type type="text/x-ssh-private-key">
+    <comment>OpenSSH private key</comment>
+    <sub-class-of type="text/plain"/>
+    <magic>
+      <match type="string" offset="0" value="-----BEGIN OPENSSH PRIVATE KEY-----"/>
+    </magic>
   </mime-type>
   <mime-type type="text/x-subviewer">
     <comment>SubViewer subtitles</comment>
@@ -5088,6 +5227,7 @@ command to generate the output files.
     <glob pattern="*.m4v"/>
     <glob pattern="*.f4v"/>
     <glob pattern="*.lrv"/>
+    <glob pattern="*.lrf" weight="60"/>
     <alias type="video/x-m4v"/>
   </mime-type>
   <mime-type type="audio/x-m4b">
@@ -5198,6 +5338,18 @@ command to generate the output files.
     <glob pattern="*.mtm"/>
     <glob pattern="*.669"/>
     <glob pattern="*.med"/>
+  </mime-type>
+  <mime-type type="audio/x-dsp">
+    <comment>Dynamic Studio module audio</comment>
+    <magic>
+      <match type="string" value="DSm\x1A\x20" offset="0">
+        <!-- number of channels: 1-16 -->
+        <match type="byte" value="0x0" mask="0xf0" offset="45"/>
+        <match type="byte" value="0x10" offset="45"/>
+      </match>
+    </magic>
+    <glob pattern="*.dsm"/>
+    <glob pattern="*.dsp" weight="40"/>
   </mime-type>
   <mime-type type="audio/mp2">
     <comment>MP2 audio</comment>
@@ -5335,6 +5487,17 @@ command to generate the output files.
     <glob pattern="*.rmx"/>
     <glob pattern="*.rmvb"/>
     <alias type="application/vnd.rn-realmedia-vbr"/>
+  </mime-type>
+  <mime-type type="image/vnd.radiance">
+    <comment>Radiance HDR image</comment>
+    <alias type="image/x-hdr"/>
+    <magic>
+      <match type="string" value="#?RADIANCE" offset="0"/>
+    </magic>
+    <glob pattern="*.hdr"/>
+    <glob pattern="*.pic"/>
+    <glob pattern="*.rgbe"/>
+    <glob pattern="*.xyze"/>
   </mime-type>
   <mime-type type="image/vnd.rn-realpix">
     <comment>RealPix document</comment>
@@ -5487,6 +5650,13 @@ command to generate the output files.
       <match type="string" value="ftypj2ki" offset="4"/>
     </magic>
     <glob pattern="*.hej2"/>
+  </mime-type>
+  <mime-type type="image/avci">
+    <comment>AVC-encoded image encapsulated in HEIF</comment>
+    <magic>
+      <match type="string" value="ftypavci" offset="4"/>
+    </magic>
+    <glob pattern="*.avci"/>
   </mime-type>
   <mime-type type="image/ief">
     <comment>IEF image</comment>
@@ -6629,6 +6799,16 @@ command to generate the output files.
     <sub-class-of type="text/plain"/>
     <glob pattern="*.css"/>
   </mime-type>
+  <mime-type type="text/spdx">
+    <comment>SPDX document</comment>
+    <acronym>SPDX</acronym>
+    <expanded-acronym>Software Package Data Exchange</expanded-acronym>
+    <sub-class-of type="text/plain"/>
+    <magic>
+      <match type="string" value="SPDXVersion: SPDX-" offset="0"/>
+    </magic>
+    <glob pattern="*.spdx"/>
+  </mime-type>
   <mime-type type="text/vcard">
     <comment>Electronic business card</comment>
     <alias type="text/directory"/>
@@ -6660,6 +6840,11 @@ command to generate the output files.
   <mime-type type="text/x-verilog">
     <comment>Verilog source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="function" offset="0"/>
+    </magic>
     <glob pattern="*.v"/>
   </mime-type>
   <mime-type type="text/x-svhdr">
@@ -6830,6 +7015,11 @@ command to generate the output files.
     <comment>WarpScript source code</comment>
     <sub-class-of type="text/plain"/>
     <glob pattern="*.mc2"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+    </magic>
+    <glob pattern="*.mc2"/>
   </mime-type>
   <mime-type type="application/x-ace">
     <comment>ACE archive</comment>
@@ -6862,6 +7052,11 @@ command to generate the output files.
     <comment>Blueprint source code</comment>
     <sub-class-of type="text/plain"/>
     <glob pattern="*.blp"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="using" offset="0"/>
+    </magic>
   </mime-type>
   <mime-type type="text/x-c++hdr">
     <comment>C++ header</comment>
@@ -6937,10 +7132,18 @@ command to generate the output files.
     <sub-class-of type="text/x-objcsrc"/>
     <alias type="text/x-c"/>
     <glob pattern="*.c" case-sensitive="true"/>
-    <magic priority="30">
-      <match type="string" value="/*" offset="0"/>
-      <match type="string" value="//" offset="0"/>
-      <match type="string" value="#include" offset="0"/>
+  </mime-type>
+  <mime-type type="text/x-dockerfile">
+    <comment>Docker container build file</comment>
+    <sub-class-of type="text/plain"/>
+    <!-- https://docs.docker.com/build/concepts/dockerfile/#filename -->
+    <glob pattern="Dockerfile"/>
+    <glob pattern="*.Dockerfile"/>
+    <glob pattern="Dockerfile.*"/>
+    <magic>
+      <!-- https://docs.docker.com/reference/dockerfile/#syntax -->
+      <!-- https://docs.docker.com/build/buildkit/frontend/ -->
+      <match type="string" value="# syntax=docker/dockerfile:" offset="0"/>
     </magic>
   </mime-type>
   <mime-type type="text/x-asm">
@@ -6961,11 +7164,36 @@ command to generate the output files.
   <mime-type type="text/x-csharp">
     <comment>C# source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="interface" offset="0"/>
+      <match type="string" value="namespace" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+      <match type="string" value="using" offset="0"/>
+    </magic>
     <glob pattern="*.cs"/>
   </mime-type>
   <mime-type type="text/x-vala">
     <comment>Vala source code</comment>
     <sub-class-of type="text/plain"/>
+    <sub-class-of type='application/x-executable'/>
+    <magic priority="10">
+      <match type="string" value="#!/bin/vala" offset="0"/>
+      <match type="string" value="#!/usr/bin/vala" offset="0"/>
+      <match type="string" value="#!/usr/bin/env vala" offset="0"/>
+      <match type="string" value="#!/usr/bin/env -S vala" offset="0"/>
+      <match type="string" value="#!/bin/env vala" offset="0"/>
+      <match type="string" value="#!/bin/env -S vala" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="interface" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+      <match type="string" value="namespace" offset="0"/>
+      <match type="string" value="using" offset="0"/>
+    </magic>
     <glob pattern="*.vala"/>
     <glob pattern="*.vapi"/>
   </mime-type>
@@ -6974,6 +7202,10 @@ command to generate the output files.
     <acronym>OOC</acronym>
     <expanded-acronym>Out Of Class</expanded-acronym>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+    </magic>
     <glob pattern="*.ooc"/>
   </mime-type>
   <mime-type type="text/x-dcl">
@@ -6993,6 +7225,14 @@ command to generate the output files.
   <mime-type type="text/x-dsrc">
     <comment>D source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="interface" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+    </magic>
     <glob pattern="*.d"/>
     <glob pattern="*.di"/>
   </mime-type>
@@ -7008,6 +7248,9 @@ command to generate the output files.
   <mime-type type="text/x-eiffel">
     <comment>Eiffel source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="class" offset="0"/>
+    </magic>
     <glob pattern="*.e"/>
     <glob pattern="*.eif"/>
   </mime-type>
@@ -7023,6 +7266,9 @@ command to generate the output files.
     <mime-type type="text/x-elixir">
     <comment>Elixir source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="def" offset="0"/>
+    </magic>
     <glob pattern="*.ex"/>
     <glob pattern="*.exs"/>
   </mime-type>
@@ -7042,6 +7288,16 @@ command to generate the output files.
   <mime-type type="text/x-genie">
     <comment>Genie source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="def" offset="0"/>
+      <match type="string" value="interface" offset="0"/>
+      <match type="string" value="namespace" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+      <match type="string" value="uses" offset="0"/>
+    </magic>
     <glob pattern="*.gs" case-sensitive="true"/>
     <generic-icon name="text-x-generic"/>
   </mime-type>
@@ -7159,6 +7415,14 @@ command to generate the output files.
   <mime-type type="text/x-java">
     <comment>Java source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="function" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="interface" offset="0"/>
+    </magic>
     <glob pattern="*.java"/>
   </mime-type>
   <mime-type type="text/x-ldif">
@@ -7229,6 +7493,22 @@ command to generate the output files.
     </magic>
     <glob pattern="*.reg"/>
   </mime-type>
+  <mime-type type="text/x-ms-visualstudio.project">
+    <comment>Visual Studio Project</comment>
+    <sub-class-of type="text/plain"/>
+    <magic>
+      <match type="string" value="# Microsoft Developer Studio Project File" offset="0"/>
+    </magic>
+    <glob pattern="*.dsp"/>
+  </mime-type>
+  <mime-type type="text/x-ms-visualstudio.workspace">
+    <comment>Visual Studio Workspace</comment>
+    <sub-class-of type="text/plain"/>
+    <magic>
+      <match type="string" value="Microsoft Developer Studio Workspace File" offset="0"/>
+    </magic>
+    <glob pattern="*.dsw"/>
+  </mime-type>
   <mime-type type="text/x-mof">
     <comment>MOF file</comment>
     <acronym>MOF</acronym>
@@ -7253,14 +7533,22 @@ command to generate the output files.
   <mime-type type="text/x-objcsrc">
     <comment>Objective-C source code</comment>
     <sub-class-of type="text/x-objc++src"/>
-    <magic priority="30">
-      <match type="string" value="#import" offset="0"/>
-    </magic>
     <glob pattern="*.m"/>
   </mime-type>
   <mime-type type="text/x-objc++src">
     <comment>Objective-C++ source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="#import " offset="0"/>
+      <match type="string" value="#include " offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="@interface" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="namespace" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+      <match type="string" value="using" offset="0"/>
+    </magic>
     <glob pattern="*.mm"/>
   </mime-type>
   <mime-type type="text/x-ocaml">
@@ -7268,21 +7556,40 @@ command to generate the output files.
     <sub-class-of type="text/plain"/>
     <glob pattern="*.ml"/>
     <glob pattern="*.mli"/>
+    <magic priority="10">
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="module" offset="0"/>
+    </magic>
+    <magic priority="5">
+      <match type="string" value="fun" offset="0"/>
+    </magic>
   </mime-type>
-  <mime-type type="text/x-opencl-src">
-    <comment>OpenCL source code</comment>
+  <mime-type type="text/x-opencl-csrc">
+    <comment>OpenCL C source code</comment>
     <acronym>OpenCL</acronym>
     <expanded-acronym>Open Computing Language</expanded-acronym>
     <sub-class-of type="text/x-csrc"/>
+    <magic priority="10">
+      <match type="string" value="#include " offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="struct" offset="0"/>
+    </magic>
     <glob pattern="*.cl"/>
+    <alias type="text/x-opencl-src"/>
+  </mime-type>
+  <mime-type type="text/x-opencl-c++src">
+    <comment>C++ for OpenCL source code</comment>
+    <acronym>OpenCL</acronym>
+    <expanded-acronym>Open Computing Language</expanded-acronym>
+    <sub-class-of type="text/x-c++src"/>
+    <glob pattern="*.clcpp"/>
   </mime-type>
   <mime-type type="text/x-matlab">
     <comment>MATLAB file</comment>
     <sub-class-of type="text/plain"/>
     <magic priority="10">
       <match type="string" value="%" offset="0"/>
-    </magic>
-    <magic>
       <match type="string" value="function" offset="0"/>
     </magic>
     <glob pattern="*.m"/>
@@ -7299,8 +7606,6 @@ command to generate the output files.
     <sub-class-of type="text/plain"/>
     <magic priority="10">
       <match type="string" value="//" offset="0"/>
-    </magic>
-    <magic>
       <match type="string" value="function" offset="0"/>
       <match type="string" value="class" offset="0"/>
       <match type="string" value="model" offset="0"/>
@@ -7337,11 +7642,21 @@ command to generate the output files.
     <comment>Dart source code</comment>
     <sub-class-of type="text/plain"/>
     <glob pattern="*.dart"/>
+    <magic priority="10">
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+    </magic>
     <alias type="text/x-dart"/>
   </mime-type>
   <mime-type type="text/x-nim">
     <comment>Nim source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="proc" offset="0"/>
+    </magic>
     <glob pattern="*.nim"/>
   </mime-type>
   <mime-type type="text/x-nimscript">
@@ -7353,6 +7668,14 @@ command to generate the output files.
   <mime-type type="text/x-go">
     <comment>Go source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+    </magic>
+    <magic priority="5">
+      <match type="string" value="func" offset="0"/>
+    </magic>
     <glob pattern="*.go"/>
   </mime-type>
   <mime-type type="text/x-scons">
@@ -7421,6 +7744,12 @@ command to generate the output files.
   <mime-type type="text/x-cython">
     <comment>Cython source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="cdef" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="def" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+    </magic>
     <glob pattern="*.pxd"/>
     <glob pattern="*.pxi"/>
     <glob pattern="*.pyx"/>
@@ -7439,6 +7768,9 @@ command to generate the output files.
       <match type="string" value="/bin/luajit" offset="2:16"/>
       <match type="string" value="/bin/env lua" offset="2:16"/>
       <match type="string" value="/bin/env luajit" offset="2:16"/>
+    </magic>
+    <magic priority="10">
+      <match type="string" value="function" offset="0"/>
     </magic>
     <glob pattern="*.lua"/>
   </mime-type>
@@ -7483,6 +7815,12 @@ command to generate the output files.
   <mime-type type="text/x-scala">
     <comment>Scala source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="def" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="package" offset="0"/>
+    </magic>
     <glob pattern="*.scala"/>
     <glob pattern="*.sc"/>
   </mime-type>
@@ -7542,10 +7880,11 @@ command to generate the output files.
     <glob pattern="*.texi"/>
     <glob pattern="*.texinfo"/>
   </mime-type>
-  <mime-type type="text/x-typst">
+  <mime-type type="text/vnd.typst">
     <comment>Typst document</comment>
     <sub-class-of type="text/plain"/>
     <glob pattern="*.typ"/>
+    <alias type="text/x-typst"/>
   </mime-type>
   <mime-type type="text/x-troff-me">
     <comment>Troff ME input document</comment>
@@ -8422,6 +8761,16 @@ command to generate the output files.
     </magic>
     <glob pattern="*.pkpass"/>
   </mime-type>
+  <mime-type type="application/vnd.apple.pkpasses">
+    <comment>Apple Wallet passes bundle</comment>
+    <sub-class-of type="application/zip"/>
+    <magic priority="65">
+      <match type="string" value="PK\003\004" offset="0">
+        <match type="string" value=".pkpass" offset="30:256"/>
+      </match>
+    </magic>
+    <glob pattern="*.pkpasses"/>
+  </mime-type>
 
   <mime-type type="application/x-pagemaker">
     <comment>Adobe PageMaker document</comment>
@@ -8553,6 +8902,14 @@ command to generate the output files.
     <magic>
       <match type="string" value="ISO-10303-21;" offset="0"/>
     </magic>
+  </mime-type>
+
+  <mime-type type="application/x-amf">
+    <comment>AMF 3D model</comment>
+    <acronym>AMF</acronym>
+    <expanded-acronym>Additive Manufacturing File</expanded-acronym>
+    <generic-icon name="image-x-generic"/>
+    <glob pattern="*.amf"/>
   </mime-type>
 
   <mime-type type="text/x.gcode">
@@ -8707,6 +9064,16 @@ command to generate the output files.
   <mime-type type="text/x-kotlin">
     <comment>Kotlin source code</comment>
     <sub-class-of type="text/plain"/>
+    <magic priority="10">
+      <match type="string" value="//" offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="class" offset="0"/>
+      <match type="string" value="import" offset="0"/>
+      <match type="string" value="package" offset="0"/>
+    </magic>
+    <magic priority="5">
+      <match type="string" value="fun" offset="0"/>
+    </magic>
     <glob pattern="*.kt"/>
   </mime-type>
 
@@ -8729,6 +9096,11 @@ command to generate the output files.
           <match type="string" value=".dts" offset="10:4090"/>
         </match>
       </match>
+    </magic>
+    <magic priority="10">
+      <match type="string" value="#include " offset="0"/>
+      <match type="string" value="/*" offset="0"/>
+      <match type="string" value="//" offset="0"/>
     </magic>
   </mime-type>
 
@@ -8920,5 +9292,166 @@ command to generate the output files.
     <comment>Tiled tileset files</comment>
     <sub-class-of type="application/xml"/>
     <glob pattern="*.tsx"/>
+  </mime-type>
+
+  <mime-type type="image/x-sct">
+    <comment>Scitex CT</comment>
+    <acronym>CT</acronym>
+    <expanded-acronym>Continuous Tone</expanded-acronym>
+    <glob pattern="*.sct"/>
+    <magic>
+      <match type="string" value="CT" offset="80"/>
+    </magic>
+  </mime-type>
+
+  <mime-type type="image/x-pxr">
+    <comment>Pixar raster</comment>
+    <glob pattern="*.pxr"/>
+    <magic>
+      <match type="string" value="\x80\xE8\x00\x00" offset="0"/>
+    </magic>
+  </mime-type>
+
+  <mime-type type="image/x-pfm">
+    <comment>Portable FloatMap</comment>
+    <glob pattern="*.pfm"/>
+    <magic>
+      <match type="string" value="PF\n" offset="0"/>
+      <match type="string" value="Pf\n" offset="0"/>
+    </magic>
+  </mime-type>
+
+  <mime-type type="text/x-nsis">
+    <comment>NSIS Script</comment>
+    <acronym>NSIS</acronym>
+    <expanded-acronym>Nullsoft Scriptable Install System</expanded-acronym>
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-generic"/>
+    <glob pattern="*.nsi"/>
+    <glob pattern="*.nsh"/>
+  </mime-type>
+
+  <mime-type type="application/x-freedesktop-appstream-component">
+    <comment>AppStream software component</comment>
+    <sub-class-of type="application/xml"/>
+    <generic-icon name="text-x-generic"/>
+    <glob pattern="*.metainfo.xml"/>
+    <glob pattern="*.appdata.xml"/>
+  </mime-type>
+
+  <mime-type type="application/x-freedesktop-appstream-releases">
+    <comment>AppStream releases information</comment>
+    <sub-class-of type="application/xml"/>
+    <generic-icon name="text-x-generic"/>
+    <glob pattern="*.releases.xml"/>
+  </mime-type>
+
+  <mime-type type="image/x-phm">
+    <comment>Portable HalfMap</comment>
+    <glob pattern="*.phm"/>
+    <magic>
+      <match type="string" value="PH\n" offset="0"/>
+      <match type="string" value="Ph\n" offset="0"/>
+    </magic>
+  </mime-type>
+
+  <mime-type type="application/x-ns-proxy-autoconfig">
+    <comment>Proxy Auto-Configuration file</comment>
+    <sub-class-of type="text/javascript"/>
+    <glob pattern="*.pac"/>
+    <magic>
+      <match type="string" value="function FindProxyForURL" offset="0:3000" />
+    </magic>
+  </mime-type>
+
+  <mime-type type="application/x.sf3-archive">
+    <comment>SF3 Archive</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.ar.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x01" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="audio/x.sf3">
+    <comment>SF3 Audio</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.au.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x02" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="image/x.sf3">
+    <comment>SF3 Image</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.img.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x03" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="application/x.sf3-log">
+    <comment>SF3 Log File</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.log.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x04" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="model/x.sf3">
+    <comment>SF3 3D Model</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.mod.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x05" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="model/x.sf3-physics">
+    <comment>SF3 Physics Model</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.phys.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x06" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="application/x.sf3-table">
+    <comment>SF3 Table</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.tab.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x07" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="application/x.sf3-text">
+    <comment>SF3 Rich Text</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.txt.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x08" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="image/x.sf3-vector">
+    <comment>SF3 Vector Graphic</comment>
+    <acronym>SF3</acronym>
+    <expanded-acronym>Simple File Format Family</expanded-acronym>
+    <glob pattern="*.vec.sf3"/>
+    <glob pattern="*.sf3"/>
+    <magic>
+      <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x09" offset="0"/>
+    </magic>
   </mime-type>
 </mime-info>

@@ -13,6 +13,12 @@ test.bmp image/bmp
 test.cel image/x-kiss-cel
 test.dcm application/dicom
 test.eps image/x-eps
+testcard_gray.pfm image/x-pfm
+testcard_rgb.pfm image/x-pfm
+testcard_gray.phm image/x-phm
+testcard_rgb.phm image/x-phm
+testcard_rgb.pxr image/x-pxr
+testcard_gray.sct image/x-sct
 # https://bugs.freedesktop.org/show_bug.cgi?id=55264
 Oriental_tattoo_by_daftpunk22.eps image/x-eps
 GammaChart.exr image/x-exr
@@ -142,6 +148,8 @@ test-without-container.jxl image/jxl
 Animated_PNG_example_bouncing_beach_ball.png image/apng x
 # Copied from https://github.com/ImageMagick/ImageMagick6/raw/main/PerlMagick/t/fpx/input_256.fpx
 input_256.fpx image/vnd.fpx
+# From https://polyhaven.com/a/greenwich_park
+greenwich_park.hdr image/vnd.radiance
 
 # Documents
 ooo-6.0.doc application/msword
@@ -213,7 +221,7 @@ ocf10-20060911.epub application/epub+zip
 # Copied from https://standardebooks.org/ebooks/elizabeth-barrett-browning/sonnets-from-the-portuguese
 elizabeth-barrett-browning_sonnets-from-the-portuguese.azw3 application/vnd.amazon.mobi8-ebook ox
 # Created with BBeBinder
-blank.lrf application/x-sony-bbeb
+blank.lrf application/x-sony-bbeb x
 # Copied from http://libwps.svn.sourceforge.net/viewvc/libwps/trunk/reference/
 test.wps application/vnd.ms-works
 # Copied from https://bugs.freedesktop.org/show_bug.cgi?id=45922
@@ -367,6 +375,9 @@ survey.jse text/jscript.encode
 Utils.jsm text/javascript ox
 esm.mjs text/javascript ox
 javascript-without-extension text/javascript xoo
+# Copied from https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/get-started/TS%20for%20JS%20Programmers.md
+UserAccount.ts application/typescript x
+UserAccount.cts application/typescript
 # The following two copied from RFC 4627.
 json_object.json application/json ox
 json_array.json application/json ox
@@ -381,6 +392,7 @@ json-ld-full-iri.jsonld application/ld+json ox
 schema.json application/schema+json x
 test.ipynb application/x-ipynb+json
 test-reordered.ipynb application/x-ipynb+json ox
+har_example.har application/har+json
 test.cs text/x-csharp ox
 test.dot text/vnd.graphviz x
 test.vala text/x-vala ox
@@ -428,14 +440,15 @@ test.mo text/x-modelica xoo
 # From https://bugs.freedesktop.org/show_bug.cgi?id=29733
 bibtex.bib text/x-bibtex
 # the following 6 test files are hand-made
-import-objc.m text/x-objcsrc
+import-objc.m text/x-objcsrc ox
 comment-objc.m text/x-objcsrc ox
-import-objc++.mm text/x-objc++src ox
+import-objc++.mm text/x-objc++src
 include-objc++.mm text/x-objc++src ox
 simple-troff.tr text/troff
 simple-troff.mm text/x-troff-mm xx
 # Copied from LLVM project test suite
-test.cl text/x-opencl-src ox
+test.cl text/x-opencl-csrc ox
+test.clcpp text/x-opencl-c++src ox
 # hand-made
 test.mc2 text/vnd.senx.warpscript ox
 # Copied from http://todotxt.org/todo.txt
@@ -503,15 +516,20 @@ test.twig text/x-twig ox
 # Crystal
 test.cr text/x-crystal ox
 test.jl text/julia ox
-test.rs text/rust ox
+test.rs text/rust
 # Copied from http://digital-preservation.github.io/csv-schema/csv-schema-1.0.html#basics
 test.csvs text/csv-schema ox
 # Copied from http://coffeescript.org/#overview
 test.coffee application/vnd.coffeescript ox
+# Copied from https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/blob/master/elements/components/shared-mime-info.bst
+test.bst application/buildstream+yaml
 # Copied from https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md#applying-security-schemes
 test.raml application/raml+yaml
 # Created with `echo 'Hello World!' > helloworld.txt && binhex -u helloworld.txt > helloworld.hqx`
 helloworld.hqx application/mac-binhex40
+# Microsoft Developer Studio (Legacy Visual Studio)
+test_vs_project.dsp text/x-ms-visualstudio.project
+test_vs_workspace.dsw text/x-ms-visualstudio.workspace
 
 # xml subtypes
 ../../data/shared-mime-info-spec.xml application/docbook+xml xox
@@ -643,6 +661,8 @@ serafettin.rar application/vnd.rar
 extractthis.asar application/x-asar
 # Created using StuffIt Deluxe 7.0
 test.sitx application/x-stuffitx
+# From https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/shared-mime-info-doc-2.4-r1.apk
+shared-mime-info-doc-2.4-r1.apk application/x-alpine-package-keeper-package xxo
 
 # Audio/Video files
 # https://bugs.freedesktop.org/show_bug.cgi?id=20070#c4
@@ -704,6 +724,8 @@ simon.669 audio/x-mod
 false-positive-669 text/plain x
 # Copied from http://modarchive.org/index.php?request=view_by_moduleid&query=177387 (public domain)
 stranger_-_run.mod audio/x-mod
+# Dynamic Studio module (minimal header only)
+test-audio.dsp audio/x-dsp x
 # Copied from https://github.com/inAudible-NG/audible-samples
 test.aa audio/x-pn-audibleaudio
 test.aax audio/vnd.audible.aax
@@ -746,6 +768,7 @@ sms-test.sms application/x-sms-rom ox
 game-gear-test.gg application/x-gamegear-rom ox
 genesis1.bin application/x-genesis-rom x
 genesis2.bin application/x-genesis-rom x
+genesis3.smd application/x-genesis-rom
 mega-drive-rom.gen application/x-genesis-rom
 # Sega Channel Revival v3
 sega-genesis-rom.smd application/x-genesis-rom
@@ -825,6 +848,8 @@ test.pdf.lz application/x-lzpdf ox
 test.pdf.xz application/x-xzpdf ox
 Makefile text/x-makefile ox
 Makefile.gnu text/x-makefile ox
+Dockerfile text/x-dockerfile
+test.Dockerfile text/x-dockerfile
 googleearth.kml application/vnd.google-earth.kml+xml ox
 # Created using geojson.io
 test.geojson application/geo+json ox
@@ -881,6 +906,8 @@ dns.cap application/vnd.tcpdump.pcap
 # From https://github.com/hadrielk/pcapng-test-generator
 test001.pcapng application/x-pcapng
 test001_be.pcapng application/x-pcapng
+# From https://github.com/falcosecurity/libs/
+curl_google.scap application/x-pcapng
 # Created using Shalom Help Maker
 test.hlp application/winhlp
 # Case-insensitive glob
@@ -907,6 +934,7 @@ ls application/x-executable x
 # ELF shared library
 libldap-2.4.so.2 application/x-sharedlib oxo
 boardingpass.pkpass application/vnd.apple.pkpass
+boardingpasses.pkpasses application/vnd.apple.pkpasses
 # AppImage created by following https://appimage-builder.readthedocs.io/en/latest/intro/tutorial.html
 appimage-demo-qt5-latest-x86_64.AppImage application/vnd.appimage
 # DOS executable
@@ -953,12 +981,10 @@ SConscript text/x-scons oxo
 SConscript.buildinfo text/x-scons oxo
 
 # Source code
-# the following 3 test files are hand-made
 cplusplusfile.C text/x-c++src oxo
 cfile.c text/x-csrc oxo
-no-extension-c-comment text/x-csrc x
-test-gettext.c text/x-csrc
-helloworld.c text/x-csrc
+test-gettext.c text/x-csrc ox
+helloworld.c text/x-csrc ox
 helloworld.s text/x-asm
 
 # Common Lisp source code
@@ -1001,6 +1027,9 @@ test.gcode text/x.gcode ox
 # Converted from binary.stl with Blender
 test.obj model/obj x
 test.mtl model/mtl
+# from https://www.printables.com/model/1283304-mac-classic-bezel/files
+bezel-v3-short-edge.amf application/x-amf oxo
+bezel-v3-short-edge-uncompressed.amf application/x-amf oxo
 
 # Virtualization disk images
 disk.qcow2 application/x-qemu-disk
@@ -1040,7 +1069,7 @@ test.gdshader application/x-godot-shader ox
 test.gd application/x-gdscript ox
 
 # Kotlin source code
-test.kt text/x-kotlin ox
+test.kt text/x-kotlin
 
 # Device Tree Source
 devicetree1.dts text/x-devicetree-source xoo
@@ -1064,6 +1093,10 @@ rgba.qoi image/qoi
 # HEJ2 - Encapsulation of JPEG 2000 images into ISO/IEC 23008-12
 # https://www.itu.int/rec/T-REC-T.815-202106-I/en
 test.hej2 image/hej2k
+
+# AVCI - AVC/H.264 compressed image in HEIF container
+# https://www.iana.org/assignments/media-types/image/avci
+test.avci image/avci
 
 # LMDB (#168), file generated by baloo's basicindexingjobtest (LGPL)
 data.mdb application/x-lmdb x
@@ -1114,7 +1147,15 @@ test.nims text/x-nimscript ox
 test.nimble text/x-nimscript ox
 
 # Typst document
-test.typ text/x-typst ox
+test.typ text/vnd.typst ox
+
+# OpenSSH public keys
+id_ecdsa.pub text/x-ssh-public-key x
+id_ed25519.pub text/x-ssh-public-key x
+id_rsa.pub text/x-ssh-public-key x
+
+# OpenSSH private keys (no extension, filename based lookup should fail)
+id_ed25519 text/x-ssh-private-key x
 
 # PCB Fabrication data transfer formats
 # Both GIMP brush and Gerber files share the glob for .gbr, so we can't use filename-based
@@ -1131,3 +1172,36 @@ pcb-gerberjob.gbrjob application/x-gerber-job ox
 
 pcb-drillFile.drl application/x-excellon
 pcb-drillFileNoExt application/x-excellon x
+
+# AppStream software component
+test.metainfo.xml application/x-freedesktop-appstream-component ox
+# AppStream releases information
+test.releases.xml application/x-freedesktop-appstream-releases ox
+
+# NSIS Script
+installer.nsi text/x-nsis ox
+
+# PAC script
+proxy.pac application/x-ns-proxy-autoconfig
+
+# SBOM files
+# https://github.com/spdx/spdx-examples/blob/master/presentations/OSS-NA-2023/SPDXVersion2.3/01-MinimalSBOM.json
+test.spdx.json application/spdx+json ox
+# test.spdx.json converted using https://tools.spdx.org/app/convert/
+test.spdx text/spdx
+# https://raw.githubusercontent.com/CycloneDX/bom-examples/refs/heads/master/SBOM/cern-lhc-vdm-editor-e564943/bom.json
+test.cdx.json application/vnd.cyclonedx+json ox
+# https://raw.githubusercontent.com/CycloneDX/bom-examples/refs/heads/master/SBOM/cern-lhc-vdm-editor-e564943/bom.xml
+test.cdx.xml application/vnd.cyclonedx+xml ox
+
+# SF3 files
+# https://shirakumo.org/projects/sf3/tree/master/samples
+sf3/blend.vec.sf3 image/x.sf3-vector
+sf3/combine.phys.sf3 model/x.sf3-physics
+sf3/f4-44100-2.au.sf3 audio/x.sf3
+sf3/markup.txt.sf3 application/x.sf3-text
+sf3/multi-text.ar.sf3 application/x.sf3-archive
+sf3/pbr-quad.mod.sf3 model/x.sf3
+sf3/rgb-u8-1x1.img.sf3 image/x.sf3
+sf3/two-chunks.log.sf3 application/x.sf3-log
+sf3/two-rows.tab.sf3 application/x.sf3-table
