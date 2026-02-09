@@ -1855,22 +1855,45 @@ command to generate the output files.
     <generic-icon name="text-x-script"/>
     <glob pattern="*.asp"/>
   </mime-type>
-  <mime-type type="application/x-awk">
+  <mime-type type="text/x-awk">
     <comment>AWK script</comment>
+    <acronym>AWK</acronym>
+    <expanded-acronym>[Alfred Vaino] Aho, [Peter Jay] Weinberger and [Brian Wilson] Kernighan [language]</expanded-acronym>
     <sub-class-of type="application/x-executable"/>
-    <sub-class-of type="text/plain"/>
     <generic-icon name="text-x-script"/>
     <magic>
-      <match type="string" value="#!/bin/gawk" offset="0"/>
-      <match type="string" value="#! /bin/gawk" offset="0"/>
-      <match type="string" value="#!/usr/bin/gawk" offset="0"/>
-      <match type="string" value="#! /usr/bin/gawk" offset="0"/>
-      <match type="string" value="#!/usr/local/bin/gawk" offset="0"/>
-      <match type="string" value="#! /usr/local/bin/gawk" offset="0"/>
-      <match type="string" value="#!/bin/awk" offset="0"/>
-      <match type="string" value="#! /bin/awk" offset="0"/>
-      <match type="string" value="#!/usr/bin/awk" offset="0"/>
-      <match type="string" value="#! /usr/bin/awk" offset="0"/>
+      <match type="string" value="#!" offset="0">
+        <match type="string" value="/bin/awk" offset="2:16"/>
+        <match type="string" value="/bin/env awk" offset="2:16"/>
+      </match>
+    </magic>
+    <glob pattern="*.awk"/>
+  </mime-type>
+  <mime-type type="text/x-gawk">
+    <comment>GNU AWK script</comment>
+    <acronym>GNU AWK</acronym>
+    <expanded-acronym>GNU's Not Unix['s] [Alfred Vaino] Aho, [Peter Jay] Weinberger and [Brian Wilson] Kernighan [language]</expanded-acronym>
+    <sub-class-of type="text/x-awk"/>
+    <generic-icon name="text-x-script"/>
+    <magic>
+      <match type="string" value="#!" offset="0">
+        <match type="string" value="/bin/gawk" offset="2:16"/>
+        <match type="string" value="/bin/env gawk" offset="2:16"/>
+      </match>
+    </magic>
+    <glob pattern="*.awk"/>
+  </mime-type>
+  <mime-type type="text/x-nawk">
+    <comment>New (BWK) AWK script</comment>
+    <acronym>New (BWK) AWK</acronym>
+    <expanded-acronym>New (Brian Wilson Kernighan) [Alfred Vaino] Aho, [Peter Jay] Weinberger and [Brian Wilson] Kernighan [language]</expanded-acronym>
+    <sub-class-of type="text/x-awk"/>
+    <generic-icon name="text-x-script"/>
+    <magic>
+      <match type="string" value="#!" offset="0">
+        <match type="string" value="/bin/nawk" offset="2:16"/>
+        <match type="string" value="/bin/env nawk" offset="2:16"/>
+      </match>
     </magic>
     <glob pattern="*.awk"/>
   </mime-type>
@@ -1896,6 +1919,22 @@ command to generate the output files.
     <magic>
       <match type="string" value="BLENDER" offset="0"/>
     </magic>
+  </mime-type>
+  <mime-type type="application/x-brotli">
+    <comment>Brotli archive</comment>
+    <generic-icon name="package-x-generic"/>
+    <magic>
+      <match type="string" value="\xce\xb2" offset="0"/>
+    </magic>
+    <glob pattern="*.br"/>
+    <alias type="application/brotli"/>
+  </mime-type>
+  <mime-type type="application/x-brotli-compressed-tar">
+    <comment>Tar archive (brotli-compressed)</comment>
+    <generic-icon name="package-x-generic"/>
+    <sub-class-of type="application/x-brotli"/>
+    <glob pattern="*.tar.br"/>
+    <glob pattern="*.tbr"/>
   </mime-type>
   <mime-type type="application/x-bzdvi">
     <comment>TeX DVI document (bzip2-compressed)</comment>
@@ -2203,16 +2242,19 @@ command to generate the output files.
       <match type="string" value="PERFILE2" offset="0"/>
     </magic>
   </mime-type>
-  <mime-type type="application/x-csh">
+  <mime-type type="text/x-csh">
     <comment>C shell script</comment>
-    <sub-class-of type="application/x-shellscript"/>
-    <sub-class-of type="text/plain"/>
+    <sub-class-of type="text/x-shellscript"/>
+    <sub-class-of type="application/x-executable"/>
+    <alias type="application/x-csh"/>
     <generic-icon name="text-x-script"/>
     <magic>
-      <match type="string" value="/bin/tcsh" offset="2:16"/>
-      <match type="string" value="/bin/csh" offset="2:16"/>
-      <match type="string" value="/bin/env csh" offset="2:16"/>
-      <match type="string" value="/bin/env tcsh" offset="2:16"/>
+      <match type="string" value="#!" offset="0">
+        <match type="string" value="/bin/tcsh" offset="2:16"/>
+        <match type="string" value="/bin/csh" offset="2:16"/>
+        <match type="string" value="/bin/env csh" offset="2:16"/>
+        <match type="string" value="/bin/env tcsh" offset="2:16"/>
+      </match>
     </magic>
     <glob pattern="*.csh"/>
   </mime-type>
@@ -2337,11 +2379,19 @@ command to generate the output files.
     <alias type="application/x-wbfs"/>
     <alias type="application/x-wia"/>
     <generic-icon name="application-x-executable"/>
+    <glob pattern="*.rvz"/>
+    <glob pattern="*.wia"/>
     <glob pattern="*.iso"/>
     <magic>
       <match offset="24" type="big32" value="0x5d1c9ea3"/>
       <match offset="0" type="string" value="WBFS"/>
       <match offset="0" type="string" value="WII\001DISC"/>
+      <match type="string" offset="0" value="WIA\x01">
+        <match type="big32" offset="72" value="2"/>
+      </match>
+      <match type="string" offset="0" value="RVZ\x01">
+        <match type="big32" offset="72" value="2"/>
+      </match>
     </magic>
   </mime-type>
   <mime-type type="application/x-wii-wad">
@@ -2358,9 +2408,17 @@ command to generate the output files.
     <comment>GameCube disc image</comment>
     <generic-icon name="application-x-executable"/>
     <alias type="application/x-gamecube-iso-image"/>
+    <glob pattern="*.rvz"/>
+    <glob pattern="*.wia"/>
     <glob pattern="*.iso"/>
     <magic>
       <match offset="28" type="big32" value="0xc2339f3d"/>
+      <match type="string" offset="0" value="WIA\x01">
+        <match type="big32" offset="72" value="1"/>
+      </match>
+      <match type="string" offset="0" value="RVZ\x01">
+        <match type="big32" offset="72" value="1"/>
+      </match>
     </magic>
   </mime-type>
   <mime-type type="application/x-thomson-cartridge-memo7">
@@ -4654,24 +4712,26 @@ command to generate the output files.
     <glob pattern="*.so"/>
     <glob weight="60" pattern="*.so.[0-9]*"/>
   </mime-type>
-  <mime-type type="application/x-shellscript">
+  <mime-type type="text/x-shellscript">
     <comment>Shell script</comment>
     <sub-class-of type="application/x-executable"/>
-    <sub-class-of type="text/plain"/>
+    <alias type="application/x-shellscript"/>
     <alias type="text/x-sh"/>
     <generic-icon name="text-x-script"/>
     <magic>
       <match type="string" value="# This is a shell archive" offset="10"/>
-      <match type="string" value="/bin/bash" offset="2:16"/>
-      <match type="string" value="/bin/nawk" offset="2:16"/>
-      <match type="string" value="/bin/zsh" offset="2:16"/>
-      <match type="string" value="/bin/sh" offset="2:16"/>
-      <match type="string" value="/bin/ksh" offset="2:16"/>
-      <match type="string" value="/bin/dash" offset="2:16"/>
-      <match type="string" value="/bin/env sh" offset="2:16"/>
-      <match type="string" value="/bin/env bash" offset="2:16"/>
-      <match type="string" value="/bin/env zsh" offset="2:16"/>
-      <match type="string" value="/bin/env ksh" offset="2:16"/>
+      <match type="string" value="#!" offset="0">
+        <match type="string" value="/bin/bash" offset="2:16"/>
+        <match type="string" value="/bin/zsh" offset="2:16"/>
+        <match type="string" value="/bin/sh" offset="2:16"/>
+        <match type="string" value="/bin/ksh" offset="2:16"/>
+        <match type="string" value="/bin/dash" offset="2:16"/>
+        <match type="string" value="/bin/env sh" offset="2:16"/>
+        <match type="string" value="/bin/env bash" offset="2:16"/>
+        <match type="string" value="/bin/env zsh" offset="2:16"/>
+        <match type="string" value="/bin/env ksh" offset="2:16"/>
+        <match type="string" value="/bin/env dash" offset="2:16"/>
+      </match>
     </magic>
     <glob pattern="*.sh"/>
   </mime-type>
@@ -5474,6 +5534,11 @@ command to generate the output files.
     <alias type="video/mp4v-es"/>
     <magic>
       <match type="string" value="ftypisom" offset="4"/>
+      <match type="string" value="ftypiso2" offset="4"/>
+      <match type="string" value="ftypiso3" offset="4"/>
+      <match type="string" value="ftypiso4" offset="4"/>
+      <match type="string" value="ftypiso5" offset="4"/>
+      <match type="string" value="ftypiso6" offset="4"/>
       <match type="string" value="ftypmp41" offset="4"/>
       <match type="string" value="ftypmp42" offset="4"/>
       <match type="string" value="ftypMSNV" offset="4"/>
@@ -7888,6 +7953,7 @@ command to generate the output files.
   <mime-type type="text/x-meson">
     <comment>Meson source code</comment>
     <glob pattern="meson.build"/>
+    <glob pattern="meson.options"/>
     <glob pattern="meson_options.txt"/>
     <sub-class-of type="text/plain"/>
   </mime-type>
@@ -9743,6 +9809,16 @@ command to generate the output files.
     <glob pattern="*.sf3"/>
     <magic>
       <match type="string" value="\x81SF3\x00\xE0\xD0\x0D\x0A\x0A\x09" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="text/slint">
+    <comment>Slint Language</comment>
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
+    <glob pattern="*.slint"/>
+    <magic>
+      <match value="std-widgets.slint" type="string" offset="0:256" />
+      <match value="export component" type="string" offset="0:256" />
     </magic>
   </mime-type>
 </mime-info>

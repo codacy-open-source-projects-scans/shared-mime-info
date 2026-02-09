@@ -477,6 +477,8 @@ plugins.qmltypes text/x-qml
 text.qmlproject text/x-qml
 # QtiPlot (qti) file
 test.qti application/x-qtiplot
+# Slint file
+app-window.slint text/slint
 # Sass CSS pre-processor file
 test.sass text/x-sass ox
 # Scheme source code
@@ -511,7 +513,7 @@ test.pl application/x-perl
 test.pm application/x-perl
 test.t application/x-perl
 # Not perl https://gitlab.freedesktop.org/xdg/shared-mime-info/-/issues/155
-shell-calls-awk application/x-shellscript x
+shell-calls-awk text/x-shellscript x
 # Copied from http://en.wikipedia.org/wiki/Turtle_%28syntax%29#Example
 test.ttl text/turtle ox
 # Twig template
@@ -597,6 +599,10 @@ good-1-delta-lzma2.tiff.xz application/x-xz
 # https://bugs.freedesktop.org/show_bug.cgi?id=55254
 sample.png.lzma application/x-lzma ox
 spinboxes-0.1.1-Linux.tar.xz application/x-xz-compressed-tar ox
+# Created using brzip Version 0.2.2
+test.br application/x-brotli
+# Created using GNU tar 1.35 and brzip Version 0.2.2
+test.tar.br application/x-brotli-compressed-tar ox
 # Created using bzip Version 0.21
 test.bz application/x-bzip1
 # Created using GNU tar 1.34 and bzip Version 0.21
@@ -739,6 +745,11 @@ test.aaxc audio/vnd.audible.aaxc
 # MPEG-4 files
 mp4v1-video-header.mp4 video/mp4
 mp4v2-video-header.mp4 video/mp4
+mp4-isom-header.mp4 video/mp4
+mp4-iso2-header.mp4 video/mp4
+mp4-iso3-header.mp4 video/mp4
+mp4-iso4-header.mp4 video/mp4
+mp4-iso5-header.mp4 video/mp4
 
 # Disk and CD/DVD images
 iso-file.iso application/vnd.efi.iso oxo
@@ -852,6 +863,12 @@ dreamcast-us-samba-de-amigo-track-1.bin application/x-dreamcast-rom x
 m64p_test_rom.n64 application/x-n64-rom
 m64p_test_rom.v64 application/x-n64-rom
 m64p_test_rom.z64 application/x-n64-rom
+# TLoZ Twilight Princess (Wii), skeletonized and truncated to 1Ko
+wii.rvz application/x-wii-rom o
+wii.wia application/x-wii-rom o
+# TLoZ Twilight Princess (GameCube), skeletonized and truncated to 1Ko
+gamecube.rvz application/x-gamecube-rom x
+gamecube.wia application/x-gamecube-rom x
 # Castlevania: The Adventure Rebirth truncated to 1Ko
 wii.wad application/x-wii-wad x
 # Mariobros from Atari 7800 truncated to 1Ko
@@ -937,6 +954,7 @@ text1.PS.gz application/x-gzpostscript oxo
 test.cmake text/x-cmake ox
 meson.build text/x-meson ox
 meson_options.txt text/x-meson ox
+meson.options text/x-meson ox
 bluerect.mdi image/vnd.ms-modi
 # FictionBook eBook files
 Stallman_Richard_-_The_GNU_Manifesto.fb2 application/x-fictionbook+xml
@@ -1194,6 +1212,16 @@ test.mrpack application/x-modrinth-modpack+zip ox
 # https://eris.codeberg.page/eer/linkfile.xml
 test.eris application/x-eris-link+cbor
 
+# Bourne-compatible shell scripts
+shscript.sh text/x-shellscript
+bashscript.sh text/x-shellscript
+zshscript.sh text/x-shellscript
+
+# Other, non-Bourne shells
+# file/libmagic calls this text/x-shellscript too, but we've always made a
+# distinction because the interpreter is different.
+tcshscript.csh text/x-csh
+
 # Fish script
 fishscript.sh application/x-fishscript xox
 fishscript.fish application/x-fishscript
@@ -1201,6 +1229,18 @@ fishscript.fish application/x-fishscript
 # Nu script
 nuscript.sh application/x-nuscript xox
 nuscript.nu application/x-nuscript
+
+# Awk and derivatives
+awk-prog.awk text/x-awk
+awk-prog-nawk.awk text/x-nawk x
+awk-prog-gawk.awk text/x-gawk x
+
+# Things that start with unknown shebangs are either application/octet-stream,
+# or, heuristically, text/plain if they have enough printable chars.
+unknown-shebang-text1 text/plain x
+unknown-shebang-text2 text/plain x
+unknown-shebang-text3 text/plain x
+unknown-shebang-binary application/octet-stream
 
 # Perf Data file
 perf.data application/x-perf-data
