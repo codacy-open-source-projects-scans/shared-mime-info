@@ -622,7 +622,7 @@ test.bz2 application/x-bzip2
 # Created using GNU tar 1.35 and bzip2 Version 1.0.8
 test.tar.bz2 application/x-bzip2-compressed-tar ox
 # Created using bzip3 1.2.2
-test.bz3 application/x-bzip3
+test.bz3 application/vnd.bzip3
 # Created using GNU tar 1.34 and bzip3 1.2.2
 test.tar.bz3 application/x-bzip3-compressed-tar ox
 # Created using lzip 1.1
@@ -919,6 +919,16 @@ nintendo-switch-encrypted.xci application/x-nintendo-switch-xci
 IWAD.WAD application/x-doom-wad
 # ICARUS.WAD trucated to 1Ko
 PWAD.WAD application/x-doom-wad
+
+# Fantasy console cartridges, binary programs, and program source
+# Custom example code for XDG, under the same license
+helloworld.ch8 application/x-chip8-program ox
+helloworld.8o application/x-chip8-octo-source ox
+helloworld.nx application/x-lowresnx-program ox
+helloworld.tic application/x-tic80-item ox
+helloworld.p8 application/x-pico8-source xoo
+helloworld.p8.rom application/x-pico8-rom oxo
+helloworld-tiny.p8.rom application/x-pico8-rom ooo
 
 # Models
 cube.igs model/iges
