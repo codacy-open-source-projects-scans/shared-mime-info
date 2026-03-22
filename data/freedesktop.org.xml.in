@@ -7443,6 +7443,7 @@ command to generate the output files.
     <acronym>TSV</acronym>
     <expanded-acronym>Tab Separated Values</expanded-acronym>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="x-office-spreadsheet"/>
     <glob pattern="*.tsv"/>
   </mime-type>
   <mime-type type="text/vnd.graphviz">
@@ -7576,6 +7577,7 @@ command to generate the output files.
     <alias type="text/x-comma-separated-values"/>
     <alias type="text/x-csv"/>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="x-office-spreadsheet"/>
     <glob pattern="*.csv"/>
   </mime-type>
   <mime-type type="text/csv-schema">
@@ -8730,6 +8732,21 @@ command to generate the output files.
     </magic>
     <glob pattern="*.fli"/>
     <glob pattern="*.flc"/>
+  </mime-type>
+  <mime-type type="image/x-aseprite">
+    <comment>Aseprite image</comment>
+    <acronym>ASE</acronym>
+    <expanded-acronym>Allegro Sprite Editor</expanded-acronym>
+    <magic>
+      <match type="little16" value="0xA5E0" offset="4">
+        <match type="little16" value="0x0000" offset="20">
+          <match type="little16" value="0x0000" offset="24"/>
+        </match>
+      </match>
+    </magic>
+    <glob pattern="*.ase"/>
+    <glob pattern="*.aseprite"/>
+    <generic-icon name="image-x-generic"/>
   </mime-type>
   <mime-type type="application/x-hwp">
     <comment>Haansoft Hangul document</comment>
