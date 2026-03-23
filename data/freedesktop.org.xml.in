@@ -1924,7 +1924,7 @@ command to generate the output files.
     <comment>Brotli archive</comment>
     <generic-icon name="package-x-generic"/>
     <magic>
-      <match type="string" value="\xce\xb2" offset="0"/>
+      <match type="string" value="\xce\xb2\xcf\x81" offset="0"/>
     </magic>
     <glob pattern="*.br"/>
     <alias type="application/brotli"/>
@@ -2029,6 +2029,16 @@ command to generate the output files.
     <generic-icon name="x-office-document"/>
     <glob pattern="*.cbz"/>
     <alias type="application/x-cbz"/>
+  </mime-type>
+  <mime-type type="application/vnd.ipld.car">
+    <comment>Archive used for storing and transporting IPLD (InterPlanetary Linked Data)</comment>
+    <acronym>CAR</acronym>
+    <expanded-acronym>Content Addressable aRchive</expanded-acronym>
+    <generic-icon name="package-x-generic"/>
+    <magic>
+      <match type="string" value="\x0a\xa1\x67\x76\x65\x72\x73\x69\x6f\x6e\x02" offset="0"/>
+    </magic>
+    <glob pattern="*.car"/>
   </mime-type>
   <mime-type type="application/x-rzip">
     <comment>Rzip archive</comment>
@@ -4075,6 +4085,16 @@ command to generate the output files.
       <match type="string" value="#Requires -PSEdition Desktop" offset="0"/>
     </magic>
     <glob pattern="*.ps1"/>
+  </mime-type>
+  <mime-type type="text/scriptlet">
+    <comment>Windows scriptlet</comment>
+    <sub-class-of type="application/xml"/>
+    <generic-icon name="text-x-script"/>
+    <magic priority="60">
+      <match type="string" value="&lt;scriptlet" offset="0:256"/>
+    </magic>
+    <glob pattern="*.sct" weight="40"/>
+    <glob pattern="*.wsc" weight="40"/>
   </mime-type>
   <mime-type type="application/x-ms-shortcut">
     <comment>Windows shortcut</comment>
@@ -8724,11 +8744,17 @@ command to generate the output files.
   </mime-type>
   <mime-type type="video/x-flic">
     <comment>FLIC animation</comment>
+    <generic-icon name="image-x-generic"/>
     <alias type="video/fli"/>
     <alias type="video/x-fli"/>
+    <alias type="video/x-flc"/>
     <magic>
-      <match type="little16" value="0xAF11" offset="0"/>
-      <match type="little16" value="0xAF12" offset="0"/>
+      <match type="little16" value="0xAF11" offset="4">
+        <match type="little16" value="0x0008" offset="12"/>
+      </match>
+      <match type="little16" value="0xAF12" offset="4">
+        <match type="little16" value="0x0008" offset="12"/>
+      </match>
     </magic>
     <glob pattern="*.fli"/>
     <glob pattern="*.flc"/>
@@ -9807,6 +9833,14 @@ command to generate the output files.
     <magic>
       <match type="string" value="PF\n" offset="0"/>
       <match type="string" value="Pf\n" offset="0"/>
+    </magic>
+  </mime-type>
+
+  <mime-type type="image/x-tim">
+    <comment>PlayStation graphics</comment>
+    <glob pattern="*.tim"/>
+    <magic>
+      <match type="string" value="\x10\x00\x00\x00" offset="0"/>
     </magic>
   </mime-type>
 

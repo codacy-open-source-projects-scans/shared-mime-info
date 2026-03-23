@@ -19,11 +19,13 @@ testcard_gray.phm image/x-phm
 testcard_rgb.phm image/x-phm
 testcard_rgb.pxr image/x-pxr
 testcard_gray.sct image/x-sct
+test_4bpp.tim image/x-tim
 # https://bugs.freedesktop.org/show_bug.cgi?id=55264
 Oriental_tattoo_by_daftpunk22.eps image/x-eps
 GammaChart.exr image/x-exr
 test.fit application/fits
-test.fli video/x-flic ox
+test.fli video/x-flic
+trafficlights.flc video/x-flic
 trafficlights.ase image/x-aseprite
 test.gif image/gif
 example.heic image/heif
@@ -376,6 +378,8 @@ helloworld.vbs text/vbscript ox
 # Created with `srcenc.exe helloworld.vbs helloworld.vbe`
 helloworld.vbe text/vbscript.encode ox
 helloworld.ps1 application/x-powershell
+# Copied from https://dmcxblue.gitbook.io/red-team-notes/execution/trusted-developer-utilities/regsvr32
+calc.sct text/scriptlet x
 build.gradle text/x-gradle ox
 ico.ksy text/x-kaitai-struct ox
 # Copied from http://asurvey.net/ccsfagent/media/survey.js
@@ -626,6 +630,10 @@ test.tar.bz2 application/x-bzip2-compressed-tar ox
 test.bz3 application/vnd.bzip3
 # Created using GNU tar 1.34 and bzip3 1.2.2
 test.tar.bz3 application/x-bzip3-compressed-tar ox
+# Created using go-car 0.6.3
+test.v1.car application/vnd.ipld.car ox
+# Created using go-car 2.16.0
+test.v2.car application/vnd.ipld.car
 # Created using lzip 1.1
 test.lz application/x-lzip
 # Created using Ark 16.07.70 + libarchive 3.1.2
