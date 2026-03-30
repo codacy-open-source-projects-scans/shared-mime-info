@@ -1855,7 +1855,29 @@ command to generate the output files.
     <generic-icon name="text-x-script"/>
     <glob pattern="*.asp"/>
   </mime-type>
+
+  <mime-type type="text/x-sed">
+    <!-- Translators: "sed" is (more often than not) written in
+    lowercase in English articles, even at the starts of sentences.
+    Its GNU manpage is actually an exception. As a guideline, follow
+    Wikipedia's usage for your language. -->
+    <comment>sed script</comment>
+    <acronym>SED</acronym>
+    <expanded-acronym>Stream EDitor</expanded-acronym>
+    <sub-class-of type="application/x-executable"/>
+    <generic-icon name="text-x-script"/>
+    <magic>
+      <match type="string" value="#!" offset="0">
+        <match type="string" value="/bin/sed" offset="2:16"/>
+        <match type="string" value="/bin/env sed" offset="2:16"/>
+      </match>
+    </magic>
+    <glob pattern="*.sed"/>
+  </mime-type>
+
   <mime-type type="text/x-awk">
+    <!-- Translators: officially uses full capitalisation. Usually
+    pronounced as a word. Compare: "NATO", "SMART" -->
     <comment>AWK script</comment>
     <acronym>AWK</acronym>
     <expanded-acronym>[Alfred Vaino] Aho, [Peter Jay] Weinberger and [Brian Wilson] Kernighan [language]</expanded-acronym>
@@ -2300,11 +2322,23 @@ command to generate the output files.
     <generic-icon name="application-x-executable"/>
     <!-- Also matches the application/x-genesis-rom magic values, hence the higher priority -->
     <magic priority="60">
-      <match type="string" value="SEGADISCSYSTEM" offset="0">
+      <!-- 2048-byte sectors -->
+      <match type="string" value="SEGADISCSYSTEM\040\040" offset="0">
         <match type="string" value="SEGA" offset="256"/>
+        <match type="string" value="\040SEGA" offset="256"/>
       </match>
-      <match type="string" value="SEGADISCSYSTEM" offset="16">
+      <match type="string" value="SEGABOOTDISC\040\040\040\040" offset="0">
+        <match type="string" value="SEGA" offset="256"/>
+        <match type="string" value="\040SEGA" offset="256"/>
+      </match>
+      <!-- 2352-byte sectors -->
+      <match type="string" value="SEGADISCSYSTEM\040\040" offset="16">
         <match type="string" value="SEGA" offset="272"/>
+        <match type="string" value="\040SEGA" offset="272"/>
+      </match>
+      <match type="string" value="SEGABOOTDISC\040\040\040\040" offset="16">
+        <match type="string" value="SEGA" offset="272"/>
+        <match type="string" value="\040SEGA" offset="272"/>
       </match>
     </magic>
     <glob pattern="*.iso"/>
@@ -2314,10 +2348,16 @@ command to generate the output files.
          Should be Sega Pico in all but Japan: https://en.wikipedia.org/wiki/Sega_Pico -->
     <comment>Sega Pico ROM</comment>
     <generic-icon name="application-x-executable"/>
-    <magic>
-      <match type="string" value="SEGA PICO" offset="256"/>
+    <magic priority="60">
+      <match type="string" offset="256" value="SEGA PICO"/>
+      <match type="string" offset="256" value="SEGATOYS PICO"/>
+      <match type="string" offset="256" value="SEGA TOYS PICO"/>
+      <match type="string" offset="256" value="SAMSUNG PICO"/>
+      <match type="string" offset="256" value="IMA IKUNOUJYUKU"/>
+      <match type="string" offset="256" value="IMA IKUNOJYUKU"/>
+      <match type="string" offset="256" value="SEGA IAC"/>
     </magic>
-    <glob pattern="*.iso"/>
+    <glob pattern="*.md" weight="10"/>
   </mime-type>
   <mime-type type="application/x-saturn-rom">
     <comment>Sega Saturn disc image</comment>
@@ -3137,32 +3177,53 @@ command to generate the output files.
       <match type="string" value="GDBM" offset="0"/>
     </magic>
   </mime-type>
-  <mime-type type="application/x-genesis-rom">
-    <!-- Translate this to Mega Drive if the console was known as such in your locale
-         Should be Mega Drive in all but en_US, Mexico and Canada: https://en.wikipedia.org/wiki/Sega_Genesis#History -->
-    <comment>Genesis ROM</comment>
+  <mime-type type="application/x-genesis-rom-smd">
+    <!-- Translate "Genesis" to "Mega Drive" if the console was known as
+         such in your locale. Should be "Mega Drive" in all but en_US,
+         Mexico and Canada:
+         https://en.wikipedia.org/wiki/Sega_Genesis#History -->
+    <comment>Genesis ROM (SMD dump)</comment>
+    <acronym>SMD</acronym>
+    <expanded-acronym>Super Magic Drive</expanded-acronym>
     <generic-icon name="application-x-executable"/>
     <magic>
-      <match type="string" value="SEGA GENESIS" offset="256"/>
-      <match type="string" value="SEGA MEGADRIVE" offset="256"/>
-      <match type="string" value="SEGA MEGA DRIVE" offset="256"/>
-      <match type="string" value="SEGA_MEGA_DRIVE" offset="256"/>
-      <match type="string" value="SEGA SSF" offset="256"/>
-      <match type="string" value="EAGN" offset="640"/>
-      <match type="string" value="EAMG" offset="640"/>
+      <match type="byte" value="3" offset="1">
+        <match type="string" value="\xAA\xBB\x06" offset="8"/>
+      </match>
+    </magic>
+    <glob pattern="*.smd"/>
+  </mime-type>
+  <mime-type type="application/x-genesis-rom">
+    <!-- Translate "Genesis" to "Mega Drive" if the console was known as
+         such in your locale. Should be "Mega Drive" in all but en_US,
+         Mexico and Canada:
+         https://en.wikipedia.org/wiki/Sega_Genesis#History -->
+    <comment>Genesis ROM</comment>
+    <generic-icon name="application-x-executable"/>
+    <magic priority="50">
+      <!-- Intentionally using just the most generic form of the TMSS bytes.
+           This type is a fallback for anything that looks like a Sega 16-bit
+           machine ROM. Types for accessories and related consoles which share
+           the same, rather variable, header format should define longer and
+           more specific magic than this, with higher priorities. -->
+      <match type="string" offset="256" value="SEGA"/>
+      <match type="string" offset="256" value=" SEGA"/>
     </magic>
     <glob pattern="*.gen"/>
-    <glob pattern="*.smd"/>
     <glob pattern="*.md" weight="10"/>
+    <glob pattern="*.68k"/>
     <glob pattern="*.sgd"/>
   </mime-type>
   <mime-type type="application/x-genesis-32x-rom">
-    <!-- Translate this to Super 32X, Mega Drive 32X or Mega 32X if the system was known as such in your locale
-         Should be Super 32X in Japan, Mega Drive 32X in PAL region and Mega 32X in Brazil: https://en.wikipedia.org/wiki/32X -->
+    <!-- Translate "Genesis 32X" to "Super 32X", "Mega Drive 32X",
+         or "Mega 32X" if the system was known as such in your locale.
+         Should be "Super 32X" in Japan, "Mega Drive 32X" in PAL regions,
+         and "Mega 32X" in Brazil: https://en.wikipedia.org/wiki/32X -->
     <comment>Genesis 32X ROM</comment>
     <generic-icon name="application-x-executable"/>
-    <magic>
-      <match type="string" value="SEGA 32X" offset="256"/>
+    <magic priority="60">
+      <match type="string" offset="256" value="SEGA 32X"/>
+      <match type="string" offset="256" value="SEGA SUPER 32X"/>
     </magic>
     <glob pattern="*.32x"/>
     <glob pattern="*.mdx"/>
@@ -3324,8 +3385,12 @@ command to generate the output files.
   </mime-type>
   <mime-type type="text/x-gradle">
     <comment>Gradle script</comment>
-    <sub-class-of type="text/x-groovy"/>
     <glob pattern="*.gradle"/>
+  </mime-type>
+  <mime-type type="text/x-gradle-kts">
+    <comment>Kotlin Gradle script</comment>
+    <sub-class-of type="text/x-kotlin"/>
+    <glob pattern="*.gradle.kts"/>
   </mime-type>
   <mime-type type="application/x-java-jnlp-file">
     <comment>JNLP file</comment>
@@ -7367,10 +7432,15 @@ command to generate the output files.
     <glob pattern="*.vct"/>
     <glob pattern="*.gcrd"/>
   </mime-type>
+  <mime-type type="text/n3">
+    <comment>Notation3 document</comment>
+    <glob pattern="*.n3"/>
+    <sub-class-of type="text/plain"/>
+  </mime-type>
   <mime-type type="text/turtle">
     <comment>Turtle document</comment>
     <glob pattern="*.ttl"/>
-    <sub-class-of type="text/plain"/>
+    <sub-class-of type="text/n3"/>
   </mime-type>
   <mime-type type="text/x-txt2tags">
     <comment>txt2tags document</comment>
@@ -9660,6 +9730,7 @@ command to generate the output files.
       </match>
     </magic>
     <magic priority="40">
+      <!-- Note: matches initial "#!" too. Keep priority low. -->
       <match type="string" mask="0x8080" value="\000\000" offset="0">
         <match type="string" value="/ {" offset="0:4090"/>
         <match type="string" value="include " offset="0:4080">
@@ -10040,6 +10111,28 @@ command to generate the output files.
     <magic>
       <match value="std-widgets.slint" type="string" offset="0:256" />
       <match value="export component" type="string" offset="0:256" />
+    </magic>
+  </mime-type>
+  <mime-type type="text/vnd.plantuml">
+    <comment>PlantUML Diagram</comment>
+    <sub-class-of type="text/plain"/>
+    <glob pattern="*.puml"/>
+    <magic priority="30">
+      <match value="@startuml" type="string" offset="0:128"/>
+      <match value="@startjson" type="string" offset="0:128"/>
+      <match value="@startyaml" type="string" offset="0:128"/>
+      <match value="@startebnf" type="string" offset="0:128"/>
+      <match value="@startregex" type="string" offset="0:128"/>
+      <match value="@startnwdiag" type="string" offset="0:128"/>
+      <match value="@startsalt" type="string" offset="0:128"/>
+      <match value="@startditaa" type="string" offset="0:128"/>
+      <match value="@startgantt" type="string" offset="0:128"/>
+      <match value="@startchronology" type="string" offset="0:128"/>
+      <match value="@startmindmap" type="string" offset="0:128"/>
+      <match value="@startwbs" type="string" offset="0:128"/>
+      <match value="@startchen" type="string" offset="0:128"/>
+      <match value="@startchart" type="string" offset="0:128"/>
+      <match value="@startfiles" type="string" offset="0:128"/>
     </magic>
   </mime-type>
 </mime-info>
