@@ -1,7 +1,7 @@
 
 project('shared-mime-info',
     'c', 'cpp',
-    version: '2.4',
+    version: '2.5.1',
     meson_version: '>=0.49.0',
     default_options : ['cpp_std=c++17']
 )

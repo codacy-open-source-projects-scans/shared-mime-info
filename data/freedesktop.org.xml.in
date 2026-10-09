@@ -84,6 +84,11 @@ command to generate the output files.
     <generic-icon name="application-x-executable"/>
     <glob pattern="*.a26"/>
   </mime-type>
+  <mime-type type="application/x-atari-5200-rom">
+    <comment>Atari 5200 ROM</comment>
+    <generic-icon name="application-x-executable"/>
+    <glob pattern="*.a52"/>
+  </mime-type>
   <mime-type type="application/x-atari-7800-rom">
     <comment>Atari 7800 ROM</comment>
     <generic-icon name="application-x-executable"/>
@@ -314,36 +319,62 @@ command to generate the output files.
     <comment>PKCS#7 file</comment>
     <acronym>PKCS</acronym>
     <expanded-acronym>Public-Key Cryptography Standards</expanded-acronym>
-    <generic-icon name="text-x-generic"/>
+    <magic>
+      <match type="string" value="-----BEGIN PKCS7-----" offset="0"/>
+      <match type="string" value="\x30\x66\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x07" offset="0"/>
+    </magic>
+    <glob pattern="*.der"/>
     <glob pattern="*.p7c"/>
     <glob pattern="*.p7m"/>
+    <glob pattern="*.p7z"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkcs7-signature">
     <comment>Detached S/MIME signature</comment>
     <acronym>S/MIME</acronym>
     <expanded-acronym>Secure/Multipurpose Internet Mail Extensions</expanded-acronym>
-    <sub-class-of type="text/plain"/>
-    <generic-icon name="text-x-generic"/>
+    <magic>
+      <match type="string" value="-----BEGIN PKCS7-----" offset="0"/>
+      <match type="string" value="\x30\x66\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x07" offset="0"/>
+    </magic>
+    <glob pattern="*.der"/>
     <glob pattern="*.p7s"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkcs8">
     <comment>PKCS#8 private key</comment>
     <acronym>PKCS</acronym>
     <expanded-acronym>Public-Key Cryptography Standards</expanded-acronym>
+    <magic>
+      <match type="string" value="-----BEGIN PRIVATE KEY-----" offset="0"/>
+    </magic>
+    <glob pattern="*.der"/>
+    <glob pattern="*.key"/>
     <glob pattern="*.p8"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkcs8-encrypted">
     <comment>PKCS#8 private key (encrypted)</comment>
     <acronym>PKCS</acronym>
     <expanded-acronym>Public-Key Cryptography Standards</expanded-acronym>
+    <magic>
+      <match type="string" value="-----BEGIN ENCRYPTED PRIVATE KEY-----" offset="0"/>
+    </magic>
+    <glob pattern="*.der"/>
     <glob pattern="*.p8e"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkcs10">
     <comment>PKCS#10 certification request</comment>
     <acronym>PKCS</acronym>
     <expanded-acronym>Public-Key Cryptography Standards</expanded-acronym>
-    <generic-icon name="text-x-generic"/>
+    <magic>
+      <match type="string" value="-----BEGIN CERTIFICATE REQUEST-----" offset="0"/>
+    </magic>
+    <glob pattern="*.csr"/>
+    <glob pattern="*.der"/>
     <glob pattern="*.p10"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkix-cert">
     <comment>X.509 certificate</comment>
@@ -352,6 +383,10 @@ command to generate the output files.
       <match type="string" value="-----BEGIN X509 CERTIFICATE-----" offset="0"/>
     </magic>
     <glob pattern="*.cer"/>
+    <glob pattern="*.cert"/>
+    <glob pattern="*.crt"/>
+    <glob pattern="*.der"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkix-crl">
     <comment>Certificate revocation list</comment>
@@ -359,6 +394,8 @@ command to generate the output files.
       <match type="string" value="-----BEGIN X509 CRL-----" offset="0"/>
     </magic>
     <glob pattern="*.crl"/>
+    <glob pattern="*.der"/>
+    <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/pkix-pkipath">
     <comment>PkiPath certification path</comment>
@@ -1609,6 +1646,11 @@ command to generate the output files.
     </magic>
     <glob pattern="*.parquet"/>
   </mime-type>
+  <mime-type type="application/vnd.android.app-bundle">
+    <comment>Android App Bundle</comment>
+    <sub-class-of type="application/java-archive"/>
+    <glob pattern="*.aab"/>
+  </mime-type>
   <mime-type type="application/vnd.android.package-archive">
     <comment>Android package</comment>
     <sub-class-of type="application/java-archive"/>
@@ -1672,8 +1714,9 @@ command to generate the output files.
     <alias type="application/wordperfect"/>
     <generic-icon name="x-office-document"/>
     <magic priority="60">
-      <match type="string" value="WPC" offset="1"/>
-      <!-- <match type="big32" value="0xff575053c405" offset="0"/> -->
+      <match type="string" value="\xffWPC" offset="0">
+        <match type="byte" value="1" offset="8"/>
+      </match>
       <match type="string" value="\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1" offset="0">
         <match type="string" value="\xff\x73\x98\x51\xad\x2d\x20\x02\x19\x37\x00\x00\x92\x96\x79\xcd" offset="592:8192"/>
       </match>
@@ -2255,11 +2298,13 @@ command to generate the output files.
     <comment>CPIO archive</comment>
     <generic-icon name="package-x-generic"/>
     <magic priority="60">
-      <match type="host16" value="070707" offset="0"/>
-      <match type="string" value="070701" offset="0"/>
-      <match type="string" value="070702" offset="0"/>
-      <match type="host16" value="0143561" offset="0"/>
+      <match type="little16" value="070707" offset="0"/>
+      <match type="big16" value="070707" offset="0"/>
+      <match type="string" value="070707" offset="0">
+        <match type="string" value="000000000000000000" mask="0xf8f8f8f8f8f8f8f8f8f8f8f8fef8f8f8f8f8" offset="6"/>
+      </match>
     </magic>
+    <!-- See application/x-sv4cpio, application/x-sv4crc sub-classes for additional magic values -->
     <glob pattern="*.cpio"/>
   </mime-type>
   <mime-type type="application/x-cpio-compressed">
@@ -2613,7 +2658,7 @@ command to generate the output files.
       <match type="string" offset="0" value="VIC20 CARTRIDGE "/>
       <match type="string" offset="0" value="PLUS4 CARTRIDGE "/>
     </magic>
-    <glob pattern="*.crt" weight="40"/><!-- cf. application/x-x509-ca-cert -->
+    <glob pattern="*.crt" weight="30"/>
   </mime-type>
 
   <!-- Spectrum snapshots -->
@@ -2914,6 +2959,22 @@ command to generate the output files.
       <match type="little16" value="0603" offset="0"/>
     </magic>
   </mime-type>
+  <mime-type type="application/x-linux-kernel">
+    <comment>Linux kernel</comment>
+    <sub-class-of type="application/x-executable"/>
+    <generic-icon name="application-x-executable"/>
+    <magic>
+      <match type="string" value="HdrS" offset="514"/><!-- x86 -->
+      <match type="little32" value="0x016f2818" offset="36"/><!-- aarch32 -->
+      <match type="big32" value="0x016f2818" offset="36"/><!-- aarch32 -->
+      <match type="string" value="ARMd" offset="56"/><!-- aarch64 -->
+      <match type="string" value="RSC\x05" offset="56"/><!-- RISC-V -->
+    </magic>
+    <glob pattern="bzImage*" case-sensitive="true"/>
+    <glob pattern="zImage*" case-sensitive="true"/>
+    <glob pattern="vmlinux*" case-sensitive="true"/>
+    <glob pattern="vmlinuz*" case-sensitive="true"/>
+  </mime-type>
   <mime-type type="application/x-fluid">
     <comment>FLTK Fluid file</comment>
     <acronym>FLTK</acronym>
@@ -3015,6 +3076,24 @@ command to generate the output files.
     <sub-class-of type="application/gzip"/>
     <generic-icon name="font-x-generic"/>
     <glob pattern="*.psf.gz"/>
+  </mime-type>
+  <mime-type type="application/x-linux-swap">
+    <comment>Linux swap file</comment>
+    <magic>
+    <!-- Although we want to include offsets for 32k and 64k page sizes,
+     the identification buffer size used by Qt (at least) is limited to
+     16k from the start of the file, so we can only include offsets from
+     4k, 8k and 16k.-->
+      <!-- 4KB page header -->
+      <match type="string" offset="4086" value="SWAPSPACE2"/> <!-- v1 -->
+      <match type="string" offset="4086" value="SWAP-SPACE"/> <!-- v0 -->
+      <!-- 8KB page header -->
+      <match type="string" offset="8182" value="SWAPSPACE2"/> <!-- v1 -->
+      <match type="string" offset="8182" value="SWAP-SPACE"/> <!-- v0 -->
+      <!-- 16KB page header -->
+      <match type="string" offset="16374" value="SWAPSPACE2"/> <!-- v1 -->
+      <match type="string" offset="16374" value="SWAP-SPACE"/> <!-- v0 -->
+    </magic>
   </mime-type>
   <mime-type type="application/x-font-pcf">
     <comment>PCF font</comment>
@@ -3873,6 +3952,35 @@ command to generate the output files.
     <acronym>LZMA</acronym>
     <expanded-acronym>Lempel-Ziv-Markov chain-Algorithm</expanded-acronym>
     <generic-icon name="package-x-generic"/>
+    <magic priority="20">
+      <!-- flags byte: default lc,lp,pb values -->
+      <match type="string" value="\x5d" offset="0">
+        <!-- the little64 at offset 5-12 is the uncompressed file size, or -1 if unknown -->
+        <match type="string" value="\xff\xff\xff\xff\xff\xff\xff\xff" offset="5">
+          <!-- dictionary sizes corresponding to the 8 xz compression preset flags -->
+          <match type="little32" value="0x00040000" offset="1"/><!-- -0 -->
+          <match type="little32" value="0x00100000" offset="1"/><!-- -1 -->
+          <match type="little32" value="0x00200000" offset="1"/><!-- -2 -->
+          <match type="little32" value="0x00400000" offset="1"/><!-- -3,-4 -->
+          <match type="little32" value="0x00800000" offset="1"/><!-- -5,-6 -->
+          <match type="little32" value="0x01000000" offset="1"/><!-- -7 -->
+          <match type="little32" value="0x02000000" offset="1"/><!-- -8 -->
+          <match type="little32" value="0x04000000" offset="1"/><!-- -9 -->
+        </match>
+        <!-- known size: its MSB is zero for all values up to ~72.06 PiB -->
+        <match type="byte" value="0" offset="12">
+          <!-- dictionary sizes -->
+          <match type="little32" value="0x00040000" offset="1"/>
+          <match type="little32" value="0x00100000" offset="1"/>
+          <match type="little32" value="0x00200000" offset="1"/>
+          <match type="little32" value="0x00400000" offset="1"/>
+          <match type="little32" value="0x00800000" offset="1"/>
+          <match type="little32" value="0x01000000" offset="1"/>
+          <match type="little32" value="0x02000000" offset="1"/>
+          <match type="little32" value="0x04000000" offset="1"/>
+        </match>
+      </match>
+    </magic>
     <glob pattern="*.lzma"/>
   </mime-type>
   <mime-type type="application/x-lzma-compressed-tar">
@@ -4126,6 +4234,35 @@ command to generate the output files.
     <glob pattern="*.ocx"/>
     <glob pattern="*.sys"/>
   </mime-type>
+  <mime-type type="application/x-efi-linux-kernel">
+    <comment>Linux kernel with EFI stub</comment>
+    <acronym>EFI</acronym>
+    <expanded-acronym>Extensible Firmware Interface</expanded-acronym>
+    <sub-class-of type="application/vnd.microsoft.portable-executable"/>
+    <sub-class-of type="application/x-linux-kernel"/>
+    <generic-icon name="application-x-executable"/>
+    <magic priority="95">
+      <match type="string" value="MZ" offset="0">
+        <match type="string" value="PE\0\0" offset="64">
+          <match type="little32" value="0x818223cd" offset="56">
+            <match type="string" value="HdrS" offset="514"/><!-- x86 -->
+            <match type="little16" value="0x6264" offset="68"/><!-- LoongArch -->
+          </match>
+          <match type="little32" value="0x016f2818" offset="36"/><!-- aarch32 -->
+          <match type="big32" value="0x016f2818" offset="36"/><!-- aarch32 -->
+          <match type="string" value="ARMd" offset="56"/><!-- aarch64 -->
+          <match type="string" value="RSC\x05" offset="56"/><!-- RISC-V -->
+        </match>
+      </match>
+    </magic>
+    <glob pattern="vmlinux.efi"/>
+    <glob pattern="vmlinuz.efi"/>
+    <glob pattern="*.efi" weight="40"/>
+    <glob pattern="bzImage*" case-sensitive="true" weight="40"/>
+    <glob pattern="zImage*" case-sensitive="true" weight="40"/>
+    <glob pattern="vmlinux*" case-sensitive="true" weight="40"/>
+    <glob pattern="vmlinuz*" case-sensitive="true" weight="40"/>
+  </mime-type>
   <mime-type type="application/x-ms-pdb">
     <comment>Windows program database</comment>
     <magic>
@@ -4193,8 +4330,19 @@ command to generate the output files.
     <comment>DOS/Windows batch file</comment>
     <sub-class-of type="text/plain"/>
     <alias type="application/bat"/>
+    <alias type="application/x-msdos-program"/>
+    <alias type="text/x-msdos-batch"/>
     <generic-icon name="text-x-script"/>
+    <magic>
+      <match type="string" offset="0" value="@">
+        <match type="string" value="ECHO OFF" offset="1" mask="0x5f5f5f5fff5f5f5f"/>
+        <match type="string" value=" ECHO OFF" offset="1" mask="0xff5f5f5f5fff5f5f5f"/>
+        <match type="string" value="REM" offset="1" mask="0x5f5f5"/>
+        <match type="string" value="SET " offset="1" mask="0x5f5f5ff"/>
+      </match>
+    </magic>
     <glob pattern="*.bat"/>
+    <glob pattern="*.cmd"/>
   </mime-type>
   <mime-type type="application/x-powershell">
     <comment>PowerShell script</comment>
@@ -4409,10 +4557,10 @@ command to generate the output files.
     <glob pattern="*.ogg"/>
     <alias type="video/x-ogg"/>
   </mime-type>
-  <mime-type type="audio/x-vorbis+ogg">
+  <mime-type type="audio/vorbis">
     <comment>Ogg Vorbis audio</comment>
     <sub-class-of type="audio/ogg"/>
-    <alias type="audio/vorbis"/>
+    <alias type="audio/x-vorbis+ogg"/>
     <alias type="audio/x-vorbis"/>
     <magic priority="80">
       <match type="string" value="OggS" offset="0">
@@ -4682,20 +4830,40 @@ command to generate the output files.
     <comment>PKCS#7 certificate bundle</comment>
     <acronym>PKCS</acronym>
     <expanded-acronym>Public-Key Cryptography Standards</expanded-acronym>
+    <magic>
+      <match type="string" value="-----BEGIN PKCS7-----" offset="0"/>
+      <match type="string" value="\x30\x66\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x07" offset="0"/>
+    </magic>
+    <glob pattern="*.der"/>
     <glob pattern="*.p7b"/>
+    <glob pattern="*.pem"/>
     <glob pattern="*.spc"/>
+  </mime-type>
+  <mime-type type="application/vnd.ms-pki.seccat">
+    <comment>Windows security catalog</comment>
+    <magic>
+      <match type="string" value="\x30\x66\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x07" offset="0"/>
+    </magic>
+    <glob pattern="*.cat"/>
   </mime-type>
   <mime-type type="application/pkcs12">
     <comment>PKCS#12 certificate bundle</comment>
     <acronym>PKCS</acronym>
     <expanded-acronym>Public-Key Cryptography Standards</expanded-acronym>
+    <glob pattern="*.der"/>
     <glob pattern="*.p12"/>
+    <glob pattern="*.pem"/>
     <glob pattern="*.pfx"/>
     <alias type="application/x-pkcs12"/>
   </mime-type>
   <mime-type type="application/x-planperfect">
     <comment>PlanPerfect spreadsheet</comment>
     <generic-icon name="x-office-spreadsheet"/>
+    <magic>
+      <match type="string" value="\xffWPC" offset="0">
+        <match type="byte" value="9" offset="8"/>
+      </match>
+    </magic>
     <glob pattern="*.pln"/>
   </mime-type>
   <mime-type type="application/x-pocket-word">
@@ -5129,6 +5297,17 @@ command to generate the output files.
     <glob pattern="*.ssa"/>
     <glob pattern="*.ass"/>
   </mime-type>
+  <mime-type type="text/x-lrc">
+    <comment>Song lyrics</comment>
+    <sub-class-of type="text/plain"/>
+    <magic>
+      <match type="string" value="[00:00.00]" mask="0xff3030ff3030ff3030ff" offset="0:256"/>
+      <match type="string" value="[00:00.000]" mask="0xff3030ff3030ff303030ff" offset="0:256"/>
+      <match type="string" value="[au: instrumental]" offset="0:256"/>
+      <match type="string" value="[au:instrumental]" offset="0:256"/>
+    </magic>
+    <glob pattern="*.lrc"/>
+  </mime-type>
   <mime-type type="text/x-ssh-public-key">
     <comment>OpenSSH public key</comment>
     <sub-class-of type="text/plain"/>
@@ -5229,13 +5408,27 @@ command to generate the output files.
   </mime-type>
   <mime-type type="application/x-sv4cpio">
     <comment>SV4 CPIO archive</comment>
+    <sub-class-of type="application/x-cpio"/>
     <generic-icon name="package-x-generic"/>
+    <magic priority="60">
+      <match type="string" value="070701" offset="0">
+        <match type="string" value="00000000" mask="0xffffffff80808080" offset="14"/>
+      </match>
+    </magic>
     <glob pattern="*.sv4cpio"/>
+    <glob pattern="*.cpio" weight="40"/>
   </mime-type>
   <mime-type type="application/x-sv4crc">
     <comment>SV4 CPIO archive (with CRC)</comment>
+    <sub-class-of type="application/x-cpio"/>
+    <magic priority="60">
+      <match type="string" value="070702" offset="0">
+        <match type="string" value="00000000" mask="0xffffffff80808080" offset="14"/>
+      </match>
+    </magic>
     <generic-icon name="package-x-generic"/>
     <glob pattern="*.sv4crc"/>
+    <glob pattern="*.cpio" weight="40"/>
   </mime-type>
   <mime-type type="application/x-tar">
     <comment>Tar archive</comment>
@@ -5396,15 +5589,18 @@ command to generate the output files.
     <glob pattern="*.wsc"/>
   </mime-type>
   <mime-type type="application/x-x509-ca-cert">
-    <comment>DER/PEM/Netscape-encoded X.509 certificate</comment>
-    <generic-icon name="text-x-generic"/>
+    <comment>X.509 CA certificate</comment>
+    <acronym>CA</acronym>
+    <expanded-acronym>Certificate Authority</expanded-acronym>
+    <sub-class-of type="application/pkix-cert"/>
     <magic>
       <match type="string" value="-----BEGIN CA CERTIFICATE-----" offset="0"/>
       <match type="string" value="-----BEGIN TRUSTED CERTIFICATE-----" offset="0"/>
     </magic>
+    <glob pattern="*.cer" weight="40"/>
+    <glob pattern="*.cert" weight="40"/>
+    <glob pattern="*.crt" weight="40"/>
     <glob pattern="*.der"/>
-    <glob pattern="*.crt"/>
-    <glob pattern="*.cert"/>
     <glob pattern="*.pem"/>
   </mime-type>
   <mime-type type="application/x-zerosize">
@@ -6114,6 +6310,58 @@ command to generate the output files.
     </magic>
     <glob pattern="*.wav"/>
   </mime-type>
+  <mime-type type="audio/x-sf1">
+    <comment>SoundFont 1 audio</comment>
+    <sub-class-of type="application/x-riff"/>
+    <magic>
+      <match type="string" value="RIFF" offset="0">
+        <match type="string" value="sfbk" offset="8">
+          <match type="string" value="LIST" offset="12">
+            <match type="string" value="INFOifil" offset="20">
+              <match type="string" value="\x01\x00" offset="32"/>
+            </match>
+          </match>
+        </match>
+      </match>
+    </magic>
+    <glob pattern="*.sbk"/>
+  </mime-type>
+  <mime-type type="audio/soundfont">
+    <comment>SoundFont 2 audio</comment>
+    <alias type="audio/x-soundfont"/>
+    <alias type="audio/x-sf2"/>
+    <alias type="application/x-sf2"/>
+    <sub-class-of type="application/x-riff"/>
+    <magic>
+      <match type="string" value="RIFF" offset="0">
+        <match type="string" value="sfbk" offset="8">
+          <match type="string" value="LIST" offset="12">
+            <match type="string" value="INFOifil" offset="20">
+              <match type="string" value="\x02\x00" offset="32"/>
+            </match>
+          </match>
+        </match>
+      </match>
+    </magic>
+    <glob pattern="*.sf2"/>
+  </mime-type>
+  <mime-type type="audio/x-sf3">
+    <comment>SoundFont 3 audio</comment>
+    <alias type="application/x-sf3"/>
+    <sub-class-of type="application/x-riff"/>
+    <magic>
+      <match type="string" value="RIFF" offset="0">
+        <match type="string" value="sfbk" offset="8">
+          <match type="string" value="LIST" offset="12">
+            <match type="string" value="INFOifil" offset="20">
+              <match type="string" value="\x03\x00" offset="32"/>
+            </match>
+          </match>
+        </match>
+      </match>
+    </magic>
+    <glob pattern="*.sf3"/>
+  </mime-type>
   <mime-type type="audio/x-xi">
     <comment>FastTracker II instrument</comment>
     <magic>
@@ -6310,12 +6558,13 @@ command to generate the output files.
     </magic>
     <glob pattern="*.ora"/>
   </mime-type>
-  <mime-type type="image/x-dds">
-    <comment>DirectDraw surface</comment>
+  <mime-type type="image/vnd.ms-dds">
+    <comment>DirectDraw Surface</comment>
     <magic>
-      <match value="DDS" type="string" offset="0"/>
+      <match value="DDS " type="string" offset="0"/>
     </magic>
     <glob pattern="*.dds"/>
+    <alias type="image/x-dds"/>
   </mime-type>
   <mime-type type="image/x-xcursor">
     <comment>X11 cursor</comment>
@@ -6623,7 +6872,7 @@ command to generate the output files.
     <sub-class-of type="image/png"/>
     <magic priority="60">
       <match type="string" value="\x89PNG\r\n\x1A\n" offset="0">
-        <match type="string" value="acTL" offset="37"/>
+        <match type="string" value="acTL" offset="33:16384"/>
       </match>
     </magic>
     <glob pattern="*.apng"/>
@@ -7030,6 +7279,37 @@ command to generate the output files.
     </magic>
     <glob pattern="*.ppm"/>
   </mime-type>
+  <mime-type type="image/x-portable-arbitrarymap">
+    <comment>PAM image</comment>
+    <acronym>PAM</acronym>
+    <expanded-acronym>Portable Arbitrary Map</expanded-acronym>
+    <sub-class-of type="image/x-portable-anymap"/>
+    <magic>
+      <match type="string" value="P7\x0a" offset="0">
+        <match type="string" value="WIDTH" offset="0:256">
+          <match type="string" value="HEIGHT" offset="0:256">
+            <match type="string" value="DEPTH" offset="0:256">
+              <match type="string" value="ENDHDR" offset="0:256"/>
+            </match>
+          </match>
+        </match>
+      </match>
+    </magic>
+    <glob pattern="*.pam"/>
+  </mime-type>
+  <mime-type type="image/x-xv-thumbnail">
+    <!-- Translators: the "xv" image viewer typically has its name written
+    in lowercase. We only break from that when expanding it as an acronym,
+    although it doesn't really "stand for" anything else. The program's FAQ
+    states: "xv stands for xv". -->
+    <comment>xv thumbnail</comment>
+    <acronym>XV</acronym>
+    <expanded-acronym>XV image viewer</expanded-acronym>
+    <magic>
+      <match type="string" value="P7 332\x0a" offset="0"/>
+    </magic>
+    <glob pattern="*.p7"/>
+  </mime-type>
   <mime-type type="image/vnd.adobe.photoshop">
     <comment>Photoshop image</comment>
     <magic>
@@ -7063,18 +7343,65 @@ command to generate the output files.
     <acronym>TGA</acronym>
     <expanded-acronym>Truevision Graphics Adapter</expanded-acronym>
     <magic priority="10">
-      <match type="string" value="\1\1" offset="1"/>
-      <match type="string" value="\1\11" offset="1"/>
-      <match type="string" value="\0\3" offset="1"/>
-      <match type="string" value="\0\xa" offset="1"/>
-      <match type="string" value="\0\xb" offset="1"/>
-    </magic>
-    <magic>
-      <match type="string" value="\0\2" offset="1">
-        <match type="byte" value="0x08" offset="16"/>
-        <match type="byte" value="0x10" offset="16"/>
-        <match type="byte" value="0x18" offset="16"/>
-        <match type="byte" value="0x20" offset="16"/>
+      <match type="string" offset="0" value="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0" mask="0x00fed400000000000000000000000000c006">
+        <!-- no colormap -->
+        <match type="string" offset="1" value="\x00\x02"> <!-- truecolor -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <match type="string" offset="1" value="\x00\x03"> <!-- greyscale -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <match type="string" offset="1" value="\x00\x0a"> <!-- truecolor rle -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <match type="string" offset="1" value="\x00\x0b"> <!-- greyscale rle -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <!-- colormap present -->
+        <match type="string" offset="1" value="\x01\x01">
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <match type="string" offset="1" value="\x01\x09"><!-- rle -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <match type="string" offset="1" value="\x01\x20"><!-- huffman -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
+        <match type="string" offset="1" value="\x01\x21"><!-- huffman-4tree -->
+          <match type="byte" offset="16" value="8"/>
+          <match type="byte" offset="16" value="15"/>
+          <match type="byte" offset="16" value="16"/>
+          <match type="byte" offset="16" value="24"/>
+          <match type="byte" offset="16" value="32"/>
+        </match>
       </match>
     </magic>
     <glob pattern="*.tga"/>
@@ -8295,6 +8622,17 @@ command to generate the output files.
     </magic>
     <glob pattern="*.go"/>
   </mime-type>
+  <mime-type type="text/x-go-mod">
+    <comment>Go module file</comment>
+    <sub-class-of type="text/plain"/>
+    <magic priority="30">
+      <match type="string" value="module " offset="0">
+        <match type="string" value="\ngo 1." offset="8:256"/>
+        <match type="string" value="\ngo 2." offset="8:256"/>
+      </match>
+    </magic>
+    <glob pattern="go.mod"/>
+  </mime-type>
   <mime-type type="text/x-scons">
     <comment>SCons configuration file</comment>
     <sub-class-of type="text/x-python"/>
@@ -8391,6 +8729,17 @@ command to generate the output files.
     </magic>
     <glob pattern="*.lua"/>
   </mime-type>
+  <mime-type type="application/x-git-bundle">
+    <comment>Git bundle</comment>
+    <generic-icon name="package-x-generic"/>
+    <magic>
+      <match type="string" value="# v2 git bundle\n" offset="0"/>
+      <match type="string" value="# v3 git bundle\n" offset="0"/>
+    </magic>
+    <glob pattern="*.bundle"/>
+    <glob pattern="*.gitbundle"/>
+    <glob pattern="*.bdl"/>
+  </mime-type>
   <mime-type type="text/x-readme">
     <comment>README document</comment>
     <sub-class-of type="text/plain"/>
@@ -8398,6 +8747,8 @@ command to generate the output files.
   </mime-type>
   <mime-type type="text/x-nfo">
     <comment>NFO document</comment>
+    <acronym>NFO</acronym>
+    <expanded-acronym>iNFOrmation</expanded-acronym>
     <sub-class-of type="text/x-readme"/>
     <glob pattern="*.nfo"/>
   </mime-type>
@@ -8553,10 +8904,12 @@ command to generate the output files.
   <mime-type type="text/x-vb">
     <comment>Visual Basic .NET source code</comment>
     <sub-class-of type="text/plain"/>
-    <magic>
-      <match type="string" value="Imports" offset="0"/>
-      <match type="string" value="Module" offset="0"/>
-      <match type="string" value="REM" offset="0"/>
+    <magic priority="40">
+      <!-- Only look for typical VB.NET letter case -->
+      <match type="string" value="Imports " offset="0"/>
+      <match type="string" value="\nImports " offset="0:256"/>
+      <match type="string" value="Module " offset="0"/>
+      <match type="string" value="\nModule "  offset="0:256"/>
     </magic>
     <glob pattern="*.vb"/>
   </mime-type>
@@ -8900,7 +9253,7 @@ command to generate the output files.
     <generic-icon name="image-x-generic"/>
   </mime-type>
   <mime-type type="application/x-hwp">
-    <comment>Haansoft Hangul document</comment>
+    <comment>Hancom HWP document</comment>
     <generic-icon name="x-office-document"/>
     <magic>
       <match type="string" value="HWP Document File" offset="0"/>
@@ -8909,10 +9262,26 @@ command to generate the output files.
     <alias type="application/vnd.haansoft-hwp"/>
   </mime-type>
   <mime-type type="application/x-hwt">
-    <comment>Haansoft Hangul document template</comment>
+    <comment>Hancom HWP document template</comment>
     <generic-icon name="x-office-document"/>
     <glob pattern="*.hwt"/>
     <alias type="application/vnd.haansoft-hwt"/>
+  </mime-type>
+  <mime-type type="application/x-hwpx">
+    <comment>Hancom HWPX document</comment>
+    <generic-icon name="x-office-document"/>
+    <glob pattern="*.hwpx"/>
+    <sub-class-of type="application/zip"/>
+    <alias type="application/hwp+zip"/>
+    <alias type="application/vnd.hancom.hwpx"/>
+    <alias type="application/x-hwp+zip"/>
+    <magic priority="70">
+      <match type="string" value="PK\003\004" offset="0">
+        <match type="string" value="mimetype" offset="30">
+          <match type="string" offset="38" value="application/hwp+zip"/>
+        </match>
+      </match>
+    </magic>
   </mime-type>
   <mime-type type="video/x-mng">
     <comment>MNG animation</comment>
@@ -9544,6 +9913,18 @@ command to generate the output files.
     </magic>
   </mime-type>
 
+  <mime-type type="model/x-brep">
+    <comment>BREP 3D model</comment>
+    <acronym>BREP</acronym>
+    <expanded-acronym>Boundary REPresentation</expanded-acronym>
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="image-x-generic"/>
+    <glob pattern="*.brep"/>
+    <magic>
+      <match type="string" value="DBRep_DrawableShape" offset="0"/>
+    </magic>
+  </mime-type>
+
   <mime-type type="application/x-amf">
     <comment>AMF 3D model</comment>
     <acronym>AMF</acronym>
@@ -9970,6 +10351,14 @@ command to generate the output files.
     </magic>
   </mime-type>
 
+  <mime-type type="image/x-farbfeld">
+    <comment>Farbfeld</comment>
+    <glob pattern="*.ff"/>
+    <magic>
+      <match type="string" value="farbfeld" offset="0"/>
+    </magic>
+  </mime-type>
+
   <mime-type type="text/x-nsis">
     <comment>NSIS Script</comment>
     <acronym>NSIS</acronym>
@@ -10135,4 +10524,39 @@ command to generate the output files.
       <match value="@startfiles" type="string" offset="0:128"/>
     </magic>
   </mime-type>
+
+  <mime-type type="application/x-pwsafe3">
+    <comment>Password Safe V3 database</comment>
+    <magic>
+      <match type="string" value="PWS3" offset="0"/>
+    </magic>
+    <glob pattern="*.psafe3"/>
+  </mime-type>
+  <mime-type type="application/x-pwsafe4">
+    <comment>Password Safe V4 database</comment>
+    <glob pattern="*.psafe4"/>
+  </mime-type>
+  <mime-type type="application/x-keepass">
+    <comment>KeePass v1.x KDB database</comment>
+    <acronym>KDB</acronym>
+    <expanded-acronym>Keepass DataBase</expanded-acronym>
+    <magic>
+      <match type="little32" value="0x9AA2D903" offset="0">
+        <match type="little32" value="0xB54BFB65" offset="4"/>
+      </match>
+    </magic>
+    <glob pattern="*.kdb"/>
+  </mime-type>
+  <mime-type type="application/x-keepass2">
+    <comment>KeePass v2.x KDBX database</comment>
+    <acronym>KDBX</acronym>
+    <expanded-acronym>Keepass DataBase eXtensible markup language</expanded-acronym>
+    <magic>
+      <match type="little32" value="0x9AA2D903" offset="0">
+        <match type="little32" value="0xB54BFB67" offset="4"/>
+      </match>
+    </magic>
+    <glob pattern="*.kdbx"/>
+  </mime-type>
+
 </mime-info>
