@@ -603,6 +603,7 @@ command to generate the output files.
   <mime-type type="application/x-gdscript">
     <comment>GDScript script</comment>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.gd"/>
   </mime-type>
   <mime-type type="application/its+xml">
@@ -1635,6 +1636,19 @@ command to generate the output files.
     <sub-class-of type="application/zip"/>
     <generic-icon name="x-office-document"/>
     <glob pattern="*.oxt" />
+  </mime-type>
+  <mime-type type="application/vnd.drawoble.drawing+zip">
+    <comment>Drawoble drawing</comment>
+    <sub-class-of type="application/zip"/>
+    <generic-icon name="image-x-generic"/>
+    <magic priority="70">
+      <match type="string" value="PK\003\004" offset="0">
+        <match type="string" value="mimetype" offset="30">
+          <match type="string" value="application/vnd.drawoble.drawing+zip" offset="38"/>
+        </match>
+      </match>
+    </magic>
+    <glob pattern="*.drawo"/>
   </mime-type>
   <mime-type type="application/vnd.apache.parquet">
     <comment>Apache Parquet file</comment>
@@ -3464,10 +3478,12 @@ command to generate the output files.
   </mime-type>
   <mime-type type="text/x-gradle">
     <comment>Gradle script</comment>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.gradle"/>
   </mime-type>
   <mime-type type="text/x-gradle-kts">
     <comment>Kotlin Gradle script</comment>
+    <generic-icon name="text-x-script"/>
     <sub-class-of type="text/x-kotlin"/>
     <glob pattern="*.gradle.kts"/>
   </mime-type>
@@ -5563,7 +5579,8 @@ command to generate the output files.
     <glob pattern="*.pdf.xz"/>
   </mime-type>
   <mime-type type="application/x-ustar">
-    <comment>Ustar archive</comment>
+    <comment>Tar archive (POSIX-compliant)</comment>
+    <sub-class-of type="application/x-tar"/>
     <generic-icon name="package-x-generic"/>
     <glob pattern="*.ustar"/>
   </mime-type>
@@ -6257,9 +6274,6 @@ command to generate the output files.
     <comment>RealText document</comment>
     <sub-class-of type="text/plain"/>
     <glob pattern="*.rt"/>
-  </mime-type>
-  <mime-type type="audio/x-riff">
-    <comment>RIFF audio</comment>
   </mime-type>
   <mime-type type="application/x-riff">
     <comment>RIFF container</comment>
@@ -6961,6 +6975,7 @@ command to generate the output files.
   </mime-type>
   <mime-type type="image/webp">
     <comment>WebP image</comment>
+    <sub-class-of type="application/x-riff"/>
     <magic>
       <match type="string" value="RIFF" offset="0">
         <match type="string" value="WEBP" offset="8"/>
@@ -7428,6 +7443,7 @@ command to generate the output files.
   </mime-type>
   <mime-type type="application/x-navi-animation">
     <comment>Windows animated cursor</comment>
+    <sub-class-of type="application/x-riff"/>
     <magic>
       <match type="string" value="RIFF" offset="0">
         <match type="string" value="ACON" offset="8"/>
@@ -7951,11 +7967,13 @@ command to generate the output files.
   <mime-type type="text/vnd.wap.wmlscript">
     <comment>WMLScript program</comment>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.wmls"/>
   </mime-type>
   <mime-type type="text/vnd.senx.warpscript">
     <comment>WarpScript source code</comment>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.mc2"/>
     <magic priority="10">
       <match type="string" value="//" offset="0"/>
@@ -8122,6 +8140,7 @@ command to generate the output files.
     <comment>Vala source code</comment>
     <sub-class-of type="text/plain"/>
     <sub-class-of type='application/x-executable'/>
+    <generic-icon name="text-x-script"/>
     <magic priority="10">
       <match type="string" value="#!/bin/vala" offset="0"/>
       <match type="string" value="#!/usr/bin/vala" offset="0"/>
@@ -8156,6 +8175,7 @@ command to generate the output files.
     <acronym>DCL</acronym>
     <expanded-acronym>Data Conversion Laboratory</expanded-acronym>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.dcl"/>
   </mime-type>
   <mime-type type="text/x-dsl">
@@ -8187,6 +8207,65 @@ command to generate the output files.
     <generic-icon name="text-x-generic"/>
     <glob pattern="*.dtd"/>
     <alias type="text/x-dtd"/>
+  </mime-type>
+  <mime-type type="text/x-editorconfig">
+    <comment>EditorConfig coding style</comment>
+    <sub-class-of type="text/plain"/>
+    <magic priority="20">
+      <match type="string" value="\n[" offset="0:1024">
+        <match type="string" value="]\n" offset="3:1024">
+          <match type="string" value="\nindent_style =" offset="4:1024"/>
+          <match type="string" value="\nindent_style=" offset="4:1024"/>
+          <match type="string" value="\nindent_size =" offset="4:1024"/>
+          <match type="string" value="\nindent_size=" offset="4:1024"/>
+          <match type="string" value="\ntrim_trailing_whitespace =" offset="4:1024"/>
+          <match type="string" value="\ntrim_trailing_whitespace=" offset="4:1024"/>
+          <match type="string" value="\ninsert_final_newline =" offset="4:1024"/>
+          <match type="string" value="\ninsert_final_newline=" offset="4:1024"/>
+          <match type="string" value="\nend_of_line =" offset="4:1024"/>
+          <match type="string" value="\nend_of_line=" offset="4:1024"/>
+        </match>
+        <match type="string" value="]\r\n" offset="4:1024">
+          <match type="string" value="\r\nindent_style =" offset="4:1024"/>
+          <match type="string" value="\r\nindent_style=" offset="4:1024"/>
+          <match type="string" value="\r\nindent_size =" offset="4:1024"/>
+          <match type="string" value="\r\nindent_size=" offset="4:1024"/>
+          <match type="string" value="\r\ntrim_trailing_whitespace =" offset="4:1024"/>
+          <match type="string" value="\r\ntrim_trailing_whitespace=" offset="4:1024"/>
+          <match type="string" value="\r\ninsert_final_newline =" offset="4:1024"/>
+          <match type="string" value="\r\ninsert_final_newline=" offset="4:1024"/>
+          <match type="string" value="\r\nend_of_line =" offset="4:1024"/>
+          <match type="string" value="\r\nend_of_line=" offset="4:1024"/>
+        </match>
+      </match>
+      <match type="string" value="[" offset="0">
+        <match type="string" value="]\n" offset="2:1024">
+          <match type="string" value="\nindent_style =" offset="3:1024"/>
+          <match type="string" value="\nindent_style=" offset="3:1024"/>
+          <match type="string" value="\nindent_size =" offset="3:1024"/>
+          <match type="string" value="\nindent_size=" offset="3:1024"/>
+          <match type="string" value="\ntrim_trailing_whitespace =" offset="3:1024"/>
+          <match type="string" value="\ntrim_trailing_whitespace=" offset="3:1024"/>
+          <match type="string" value="\ninsert_final_newline =" offset="3:1024"/>
+          <match type="string" value="\ninsert_final_newline=" offset="3:1024"/>
+          <match type="string" value="\nend_of_line =" offset="3:1024"/>
+          <match type="string" value="\nend_of_line=" offset="3:1024"/>
+        </match>
+        <match type="string" value="]\r\n" offset="2:1024">
+          <match type="string" value="\r\nindent_style =" offset="3:1024"/>
+          <match type="string" value="\r\nindent_style=" offset="3:1024"/>
+          <match type="string" value="\r\nindent_size =" offset="3:1024"/>
+          <match type="string" value="\r\nindent_size=" offset="3:1024"/>
+          <match type="string" value="\r\ntrim_trailing_whitespace =" offset="3:1024"/>
+          <match type="string" value="\r\ntrim_trailing_whitespace=" offset="3:1024"/>
+          <match type="string" value="\r\ninsert_final_newline =" offset="3:1024"/>
+          <match type="string" value="\r\ninsert_final_newline=" offset="3:1024"/>
+          <match type="string" value="\r\nend_of_line =" offset="3:1024"/>
+          <match type="string" value="\r\nend_of_line=" offset="3:1024"/>
+        </match>
+      </match>
+    </magic>
+    <glob pattern=".editorconfig"/>
   </mime-type>
   <mime-type type="text/x-eiffel">
     <comment>Eiffel source code</comment>
@@ -8606,6 +8685,7 @@ command to generate the output files.
   <mime-type type="text/x-nimscript">
     <comment>Nimscript source code</comment>
     <sub-class-of type="text/x-nim"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.nims"/>
     <glob pattern="*.nimble"/>
   </mime-type>
@@ -8643,6 +8723,7 @@ command to generate the output files.
   <mime-type type="text/x-python3">
     <comment>Python 3 script</comment>
     <sub-class-of type='text/x-python'/>
+    <generic-icon name="text-x-script"/>
     <magic priority="60"><!-- higher priority than text/x-python -->
       <match type="string" value="#!/bin/python3" offset="0"/>
       <match type="string" value="#! /bin/python3" offset="0"/>
@@ -8662,6 +8743,7 @@ command to generate the output files.
   <mime-type type="text/x-python2">
     <comment>Python 2 script</comment>
     <sub-class-of type='text/x-python'/>
+    <generic-icon name="text-x-script"/>
     <magic priority="60"><!-- higher priority than text/x-python -->
       <match type="string" value="#!/bin/python2" offset="0"/>
       <match type="string" value="#! /bin/python2" offset="0"/>
@@ -8681,6 +8763,7 @@ command to generate the output files.
     <comment>Python script</comment>
     <sub-class-of type='application/x-executable'/>
     <sub-class-of type="text/x-cython"/>
+    <generic-icon name="text-x-script"/>
     <magic>
       <match type="string" value="#!/bin/python" offset="0"/>
       <match type="string" value="#! /bin/python" offset="0"/>
@@ -8712,12 +8795,14 @@ command to generate the output files.
   <mime-type type="text/x-sagemath">
     <comment>SageMath script</comment>
     <sub-class-of type="text/x-python"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.sage" weight="60"/>
   </mime-type>
   <mime-type type="text/x-lua">
     <comment>Lua script</comment>
     <sub-class-of type='application/x-executable'/>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <magic>
       <match type="string" value="/bin/lua" offset="2:16"/>
       <match type="string" value="/bin/luajit" offset="2:16"/>
@@ -8821,6 +8906,7 @@ command to generate the output files.
     <comment>Tcl script</comment>
     <alias type="text/x-tcl"/>
     <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.tcl"/>
     <glob pattern="*.tk"/>
   </mime-type>
@@ -10214,6 +10300,8 @@ command to generate the output files.
     <comment>SPARQL query</comment>
     <acronym>SPARQL</acronym>
     <expanded-acronym>SPARQL Protocol and RDF Query Language</expanded-acronym>
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.qs"/>
     <magic priority="40">
       <match type="string" value="PREFIX" offset="0"/>
@@ -10396,6 +10484,7 @@ command to generate the output files.
   <mime-type type="application/x-ns-proxy-autoconfig">
     <comment>Proxy Auto-Configuration file</comment>
     <sub-class-of type="text/javascript"/>
+    <generic-icon name="text-x-script"/>
     <glob pattern="*.pac"/>
     <magic>
       <match type="string" value="function FindProxyForURL" offset="0:3000" />

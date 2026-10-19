@@ -315,6 +315,8 @@ test.numbers application/vnd.apple.numbers ox
 test.pages application/vnd.apple.pages
 test.pmd application/x-pagemaker oxo
 sample.vsdx application/vnd.ms-visio.drawing.main+xml oxo
+# Created with Drawoble 0.5.0
+test.drawo application/vnd.drawoble.drawing+zip
 appleworks.cwk application/x-appleworks-document oxo
 # test.oxps and test.xps "printed" with Windows 10 Microsoft XPS Document Writer
 test.oxps application/oxps ox
@@ -654,6 +656,10 @@ archive2.7z.001 application/x-7z-compressed
 comics.cb7 application/x-cb7 ox
 # Created using tar
 archive.tar application/x-tar
+gnu.tar application/x-tar
+oldgnu.tar application/x-tar
+posix.tar application/x-tar
+v7.tar application/x-tar ox
 comics.cbt application/x-cbt ox
 # Created using lcab
 copying.cab application/vnd.ms-cab-compressed
@@ -1470,6 +1476,14 @@ test.files.puml text/vnd.plantuml
 nix-configuration.nix text/x-nix ox
 nix-hardware-configuration.nix text/x-nix ox
 nix-home.nix text/x-nix ox
+
+# EditorConfig coding style files
+.editorconfig text/x-editorconfig
+../../.editorconfig text/x-editorconfig xoo
+editorconfig0lf text/x-editorconfig xoo
+editorconfig0crlf text/x-editorconfig xoo
+editorconfigNlf text/x-editorconfig xoo
+editorconfigNcrlf text/x-editorconfig xoo
 
 ## Secure password storage formats (passwords are all "example")
 # pwsafe/"Password Safe" (https://pwsafe.org/)
